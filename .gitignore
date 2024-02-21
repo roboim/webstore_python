@@ -1,0 +1,17 @@
+# ide
+.idea
+.vscode
+
+#python
+venv
+__pycache__
+
+#django
+stats/migrations/*
+!**/migrations/__init__.py
+
+#chore
+.env
+*.log
+
+#other
