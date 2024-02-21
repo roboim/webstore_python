@@ -2,8 +2,12 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from storebackend.models import Category
+from storebackend.serializers import CategorySerializer
 
-@api_view(['get'])
+
+@api_view(['GET'])
 def demo(request):
-    data = {'message': 'Hello'}
-    return Response(data)
+    queryset = Category.objects.all()
+    result = CategorySerializer(queryset, many=True)
+    return Response(result.data)
