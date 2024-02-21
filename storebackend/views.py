@@ -55,4 +55,4 @@ class ProductCreateView(CreateAPIView):
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
