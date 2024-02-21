@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -15,9 +16,21 @@ from storebackend.serializers import CategorySerializer
 #     return Response(result.data)
 
 
-class CategoryView(ListCreateAPIView):
+class CategoryView(ListAPIView):
+    """
+    Класс для просмотра категорий товаров
+    """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class CategoryCreateView(CreateAPIView):
+    """
+    Класс для создания категорий товаров
+    """
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser]
 
     # def post(self, request, *args, **kwargs):
     #     serializer = CategorySerializer(data=request.data)
