@@ -24,7 +24,7 @@ class CategoryView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = CategorySerializer(data=request.data)
         if serializer.is_valid():
-            shop = serializer.save()
-            return Response(CategorySerializer(shop).data)
+            category = serializer.save()
+            return Response(CategorySerializer(category).data)
         else:
             return Response(serializer.errors)
