@@ -1,7 +1,12 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
-from storebackend.models import Category, Product
+from storebackend.models import Category, Product, User
+
+
+@admin.register(User)
+class UserAdmin(ImportExportModelAdmin):
+    pass
 
 
 @admin.register(Category)
