@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from storebackend.models import Category
+from storebackend.models import Category, Product
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -11,5 +11,5 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
+        model = Product
         fields = ['id', 'name', 'category']
