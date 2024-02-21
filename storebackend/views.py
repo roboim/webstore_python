@@ -11,3 +11,4 @@ def demo(request):
     queryset = Category.objects.all()
     result = CategorySerializer(queryset, many=True)
     return Response(result.data)
+
