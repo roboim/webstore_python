@@ -33,13 +33,14 @@ filename = 'shop1.yaml'     # Название тестового файла д�
 # print(response.text)
 
 # Обновить данные поставщика
-with open(filename, 'r', encoding="utf-8") as f:
-    export_data = yaml.load(f, Loader=yaml.FullLoader)
-    pprint(export_data)
-    response = requests.post(
-        f'http://127.0.0.1:8000/{str_route}supplier/data/',
-        data=export_data,
-    )
-    print(response.status_code)
-    print(response.text)
+with open(filename, 'rb') as f:
+    files = {'upload_file': f.read()}
+values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
+response = requests.post(
+    f'http://127.0.0.1:8000/{str_route}supplier/data/',
+    files=files,
+    data=values
+)
+print(response.status_code)
+print(response.text)
 
