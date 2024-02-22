@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from storebackend.models import Category, Product
 from storebackend.serializers import CategorySerializer, ProductSerializer
+from storebackend.services import read_yaml_write_to_db
 
 
 # @api_view(['GET'])
@@ -63,8 +64,5 @@ class SupplierCreateView(CreateAPIView):
     permission_classes = [AllowAny]  # Задать согласно аутентификации поставщика!!!!
 
     def post(self, request, *args, **kwargs):
-
-
-        return Response({'Status': True, 'success': 'Yes'}, status=201)
-        # return self.create(request, *args, **kwargs)
+        return read_yaml_write_to_db(request, *args, **kwargs)
 
