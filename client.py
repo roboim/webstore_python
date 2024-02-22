@@ -9,7 +9,7 @@ print(response.text)
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}categories/create/',
-#     json={'name': 'Категория 9', 'shops': []}
+#     json={'name': 'Категория 11', 'shops': []}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -27,4 +27,10 @@ print(response.text)
 # print(response.status_code)
 # print(response.text)
 
+# Обновить данные поставщика
+response = requests.post(
+    f'http://127.0.0.1:8000/{str_route}supplier/data/'
+)
+print(response.status_code)
+print(response.text)
 

@@ -1,7 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView, CreateAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -56,3 +57,15 @@ class ProductCreateView(CreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
+
+
+class SupplierCreateView(CreateAPIView):
+    """
+    Класс для создания/обновления данных поставщика
+    """
+    permission_classes = [AllowAny]  # Задать согласно аутентификации поставщика!!!!
+
+    def post(self, request, *args, **kwargs):
+        return Response({'Status': True, 'success': 'Yes'}, status=201)
+        # return self.create(request, *args, **kwargs)
+
