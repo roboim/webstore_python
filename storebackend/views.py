@@ -63,6 +63,8 @@ class SupplierCreateView(CreateAPIView):
     permission_classes = [AllowAny]  # Задать согласно аутентификации поставщика!!!!
 
     def post(self, request, *args, **kwargs):
+
+
         return Response({'Status': True, 'success': 'Yes'}, status=201)
         # return self.create(request, *args, **kwargs)
 
