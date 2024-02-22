@@ -1,11 +1,17 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 
-from storebackend.models import Category, Product, User
+from storebackend.models import User, Shop, Category, Product, ProductInfo, Parameter, ProductParameter, Contact, Order, \
+    OrderItem
 
 
 @admin.register(User)
 class UserAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(Shop)
+class ShopAdmin(ImportExportModelAdmin):
     pass
 
 
@@ -23,3 +29,31 @@ class ProductAdmin(ImportExportModelAdmin):
     # search_fields = ['id', 'name', 'category']
 
 
+@admin.register(ProductInfo)
+class ProductInfoAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(Parameter)
+class ParameterAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(ProductParameter)
+class ProductParameterAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(Contact)
+class ContactAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(Order)
+class OrderAdmin(ImportExportModelAdmin):
+    pass
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(ImportExportModelAdmin):
+    pass
