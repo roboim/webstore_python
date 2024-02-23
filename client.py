@@ -35,7 +35,7 @@ filename = 'shop1.yaml'     # Название тестового файла д�
 # Обновить данные поставщика
 with open(filename, 'rb') as f:
     files = {'upload_file': f.read()}
-values = {'DB': 'photcat', 'OUT': 'csv', 'SHORT': 'short'}
+values = {'DB': 'postgres', 'OUT': 'yaml'}
 response = requests.post(
     f'http://127.0.0.1:8000/{str_route}supplier/data/',
     files=files,
