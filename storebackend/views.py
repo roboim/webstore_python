@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from storebackend.models import Category, Product
 from storebackend.serializers import CategorySerializer, ProductSerializer
-from storebackend.services import read_yaml_write_to_db
+from storebackend.services import read_yaml_write_to_db, create_user_data
 
 
 # @api_view(['GET'])
@@ -13,6 +13,15 @@ from storebackend.services import read_yaml_write_to_db
 #     queryset = Category.objects.all()
 #     result = CategorySerializer(queryset, many=True)
 #     return Response(result.data)
+
+class UserCreateView(CreateAPIView):
+    """
+    Создать пользователя
+    """
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        return create_user_data(request, *args, **kwargs)
 
 
 class CategoryView(ListAPIView):

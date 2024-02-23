@@ -29,7 +29,7 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}products/create/',
-#     json={'name': 'Продукт 1010', 'category': 1},
+#     json={'name': 'Продукт 1011', 'category': 1},
 #     headers={'Authorization': f'Bearer {token}'}
 # )
 # print(response.status_code)
@@ -73,3 +73,17 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # )
 # print(response.status_code)
 # print(response.text)
+
+#  Создать пользователя
+response = requests.post(
+    f'http://127.0.0.1:8000/{str_route}user/create/',
+    json={'email': 'shop@shop.ru',
+          'company': 'Test_company',
+          'position': 'Manager',
+          'username': 'Ilya',
+          'type': 'shop',
+          'first_name': 'Ilya',
+          'last_name': 'Net'}
+)
+print(response.status_code)
+print(response.text)

@@ -1,7 +1,7 @@
 import yaml
 from rest_framework.response import Response
 
-from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter
+from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter, User
 
 
 def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
@@ -10,7 +10,6 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     """
 
     #  !!!!!!!!!!!!!! Добавить владельца магазина после аутентификации
-
 
     categories_created = 0
     categories_updated = 0
@@ -92,6 +91,28 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
                      },
                     status=201)
 
+
+def create_user_data(request, *args, **kwargs) -> Response:
+    user_data = {'email': '',
+                 'company': '',
+                 'position': '',
+                 'username': '',
+                 'type': '',
+                 'first_name': '',
+                 'last_name': ''}
+    try:
+        for key, value in user_data.items():
+            if user_data['email']:
+                if User.objects.filter(email=user_data['email']).exists():
+                    return error_prompt(False, f'User already exists', 400)
+            user_data[key] = request.data[key]
+    except Exception as error:
+        return error_prompt(False, f'Please check: {error}', 400)
+
+    return Response({'Status': True,
+                     'description': f'{user_data}'
+                     },
+                    status=201)
 
 def error_prompt(status_data: bool, error_data: str, code_data: int) -> Response:
     """
