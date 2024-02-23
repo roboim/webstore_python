@@ -36,6 +36,8 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     for category in import_data['categories']:
         try:
             category_current, status_result = Category.objects.get_or_create(id=category['id'], name=category['name'])
+            category_current.shops.add(shop.id)
+            category_current.save()
             if status_result:
                 categories_created += 1
             else:
@@ -43,7 +45,18 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
         except Exception as error:
             return error_prompt(False, "File didn't load. Category id and name problem",
                                 400)
-    print(shop, status_result)
+
+    #  Категории товаров
+    for category in import_data['categories']:
+        try:
+            category_current, status_result = Category.objects.get_or_create(id=category['id'], name=category['name'])
+            if status_result:
+                categories_created += 1
+            else:
+                categories_updated += 1
+        except Exception as error:
+            return error_prompt(False, "File didn't load. Category id and name problem",
+                                400)
 
     return Response({'Status': True,
                      'description': f'shop: {shop_name_db}, '
