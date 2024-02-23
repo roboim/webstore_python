@@ -1,7 +1,9 @@
 import yaml
+from django.contrib.auth.password_validation import validate_password
 from rest_framework.response import Response
 
 from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter, User
+from storebackend.serializers import UserSerializer
 
 
 def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
@@ -94,6 +96,7 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
 
 def create_user_data(request, *args, **kwargs) -> Response:
     user_data = {'email': '',
+                 'password': '',
                  'company': '',
                  'position': '',
                  'username': '',
@@ -105,12 +108,24 @@ def create_user_data(request, *args, **kwargs) -> Response:
             if user_data['email']:
                 if User.objects.filter(email=user_data['email']).exists():
                     return error_prompt(False, f'User already exists', 400)
+            if user_data['password']:
+                validate_password(user_data['password'])
             user_data[key] = request.data[key]
+
+        user_serializer = UserSerializer(data=user_data)
+        if user_serializer.is_valid():
+            user = user_serializer.save()
+            user.set_password(user_data['password'])
+            user.save()
+        else:
+            return error_prompt(False, f'Please check: {user_serializer.errors}', 400)
     except Exception as error:
         return error_prompt(False, f'Please check: {error}', 400)
 
+    email_confirmation = user_data['email']
     return Response({'Status': True,
-                     'description': f'{user_data}'
+                     'description': f'Thank you for registration. Please, check your email:{email_confirmation} and '
+                                    f'confirm your registration'
                      },
                     status=201)
 
