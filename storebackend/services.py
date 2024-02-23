@@ -1,7 +1,7 @@
 import yaml
 from rest_framework.response import Response
 
-from storebackend.models import Shop, ProductInfo, Category
+from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter
 
 
 def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
@@ -12,6 +12,8 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     categories_updated = 0
     products_created = 0
     products_updated = 0
+    parameters_created = 0
+    parameters_updated = 0
 
     try:
         import_file = request.FILES['upload_file'].file.read()
@@ -47,15 +49,33 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
                                 400)
 
     #  Категории товаров
-    for category in import_data['categories']:
+    for product in import_data['products']:
         try:
-            category_current, status_result = Category.objects.get_or_create(id=category['id'], name=category['name'])
+            product_current, status_result = Product.objects.get_or_create(
+                name=product['name'],
+                category_id=product['category'])
             if status_result:
-                categories_created += 1
+                products_created += 1
             else:
-                categories_updated += 1
+                products_updated += 1
+            product_info = ProductInfo.objects.create(product_id=product_current.id,
+                                                      shop_id=shop.id,
+                                                      external_id=product['id'],
+                                                      model=product['model'],
+                                                      price=product['price'],
+                                                      price_rrc=product['price_rrc'],
+                                                      quantity=product['quantity'])
+            for name, value in product['parameters'].items():
+                parameter_current, status_result = Parameter.objects.get_or_create(name=name)
+                if status_result:
+                    parameters_created += 1
+                else:
+                    parameters_updated += 1
+                ProductParameter.objects.create(product_info_id=product_info.id,
+                                                parameter_id=parameter_current.id,
+                                                value=value)
         except Exception as error:
-            return error_prompt(False, "File didn't load. Category id and name problem",
+            return error_prompt(False, f"File didn't load. Product's problem: {product}",
                                 400)
 
     return Response({'Status': True,
@@ -63,7 +83,10 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
                                     f'categories_created: {categories_created}, '
                                     f'categories_updated: {categories_updated}, '
                                     f'products_created: {products_created}, '
-                                    f'products_updated: {products_updated}'},
+                                    f'products_updated: {products_updated}, '
+                                    f'parameter_created: {parameters_created}, '
+                                    f'parameter_updated: {parameters_updated}'
+                     },
                     status=201)
 
 
