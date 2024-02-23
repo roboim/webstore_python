@@ -87,8 +87,8 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
                                     f'categories_updated: {categories_updated}, '
                                     f'products_created: {products_created}, '
                                     f'products_updated: {products_updated}, '
-                                    f'parameter_created: {parameters_created}, '
-                                    f'parameter_updated: {parameters_updated}'
+                                    f'parameters_created: {parameters_created}, '
+                                    f'parameters_updated: {parameters_updated}'
                      },
                     status=201)
 
