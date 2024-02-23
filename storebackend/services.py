@@ -8,6 +8,10 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     """
     Прочитать yaml файл и выполнить запись в базу данных
     """
+
+    #  !!!!!!!!!!!!!! Добавить владельца магазина после аутентификации
+
+
     categories_created = 0
     categories_updated = 0
     products_created = 0
@@ -21,8 +25,6 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     except Exception as error:
         return error_prompt(False, "File didn't load", 400)
     #  Записать/обновить данные по магазину
-
-    #  !!!!!!!!!!!!!! Добавить владельца магазина после аутентификации
     #  Магазин
     if type(import_data['shop']) is not str:
         return error_prompt(False, f"File didn't load. More than one shop", 400)
@@ -48,7 +50,7 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
             return error_prompt(False, "File didn't load. Category id and name problem",
                                 400)
 
-    #  Категории товаров
+    #  Товары
     for product in import_data['products']:
         try:
             product_current, status_result = Product.objects.get_or_create(
@@ -65,6 +67,7 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
                                                       price=product['price'],
                                                       price_rrc=product['price_rrc'],
                                                       quantity=product['quantity'])
+            #  Параметры товаров
             for name, value in product['parameters'].items():
                 parameter_current, status_result = Parameter.objects.get_or_create(name=name)
                 if status_result:
