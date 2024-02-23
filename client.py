@@ -82,7 +82,6 @@ response = requests.post(
           'position': 'Manager',
           'username': 'Ilya',
           'type': 'shop',
-          'first_name': 'Ilya',
           'last_name': 'Net'}
 )
 print(response.status_code)

@@ -114,6 +114,7 @@ def create_user_data(request, *args, **kwargs) -> Response:
                      },
                     status=201)
 
+
 def error_prompt(status_data: bool, error_data: str, code_data: int) -> Response:
     """
     Вернуть сообщение об ошибке
