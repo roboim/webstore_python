@@ -6,7 +6,7 @@ import yaml
 str_route = 'api/v1/'       # API версия
 filename = 'shop1.yaml'     # Название тестового файла для обновления данных поставщика
 
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTQ0NzcwLCJpYXQiOjE3MDg2ODA3NzAsImp0aSI6IjVhNmI4Y2I2OTYxZDQzZjY4N2M0ZTEzZThiNjE4YWRmIiwidXNlcl9pZCI6MX0.MDS6B_9RN2uP7yjdKyVaeUrksAR3-OxSHuy1ZCtT8Wg"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTQ3Mjc3LCJpYXQiOjE3MDg2ODMyNzcsImp0aSI6ImFlZTYyOTAzMGY4MTRhYjdiZjQwNzJmZDcwMTE5OGVkIiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.rDqFfdvWtrSebX0Gt5dE73qkgoIap3DFw7txUmvX5OI"
 
 # response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}categories/'
@@ -27,13 +27,13 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # print(response.status_code)
 # print(response.text)
 
-response = requests.post(
-    f'http://127.0.0.1:8000/{str_route}products/create/',
-    json={'name': 'Продукт 1000', 'category': 1},
-    headers={'Authorization': f'Bearer {token}'}
-)
-print(response.status_code)
-print(response.text)
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}products/create/',
+#     json={'name': 'Продукт 1010', 'category': 1},
+#     headers={'Authorization': f'Bearer {token}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # # Обновить данные поставщика
 # with open(filename, 'rb') as f:
@@ -55,5 +55,21 @@ print(response.text)
 # print(response.status_code)
 # print(response.text)
 
-# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTI3Mjc3MCwiaWF0IjoxNzA4NjgwNzcwLCJqdGkiOiI2OTNhNzYyYzk4NGQ0NmRiYjM0ZDMxN2IzOTAwYjA0ZiIsInVzZXJfaWQiOjF9.PTKWlBuShD0sejTmtMzUKYabT_uPSUodqwKA5DWNj2A"
-# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTQ0NzcwLCJpYXQiOjE3MDg2ODA3NzAsImp0aSI6IjVhNmI4Y2I2OTYxZDQzZjY4N2M0ZTEzZThiNjE4YWRmIiwidXNlcl9pZCI6MX0.MDS6B_9RN2uP7yjdKyVaeUrksAR3-OxSHuy1ZCtT8Wg"
+# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTI3NTQ1MywiaWF0IjoxNzA4NjgzNDUzLCJqdGkiOiIxYzczMDk2ZDBiMTQ0NTI1Yjg3ZGRkYzk4MWIzNTM3NCIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.FxCGiK4LPrdKXPkXqCwJx7KQCXXDR499Rxsd5V0L9Uc"
+# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTQ3NDUzLCJpYXQiOjE3MDg2ODMyNzcsImp0aSI6IjFkNzMyMGI2ZGJmZDRkNGQ4NjliNjcyNTMwMDY3NGJlIiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.ixITH2PpQZIVm1rHr69ws07985IzEbRAr3tkW1Adzqg"
+
+# #  Обновить токен
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}token/refresh/',
+#     json={'email': 'admin@admin.ru', 'password': 'admin', 'refresh':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTI3NTI3NywiaWF0IjoxNzA4NjgzMjc3LCJqdGkiOiI3Yjk1ODY5MWZmZjI0ZjdlOTNkZGNiYzg5NDc1NjZhNiIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.2y6tkpLe6GIvQKNRySWDN2bHmS-EBervxrKc8ulZok4'}
+# )
+# print(response.status_code)
+# print(response.text)
+
+# #  Занести токен в чёрный список
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}token/blacklist/',
+#     json={'email': 'admin@admin.ru', 'password': 'admin', 'refresh':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTI3NDU2NiwiaWF0IjoxNzA4NjgyNTY2LCJqdGkiOiIyMzYxMDA1NGIyYzc0MWNjYjIwZjQ5YjZlNGZhZTEzOCIsInVzZXJfaWQiOjF9.sPJLwmB01lj-7XkBqQr_vGQsfp4nAHl99uhJ4kaHMwI'}
+# )
+# print(response.status_code)
+# print(response.text)
