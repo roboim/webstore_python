@@ -77,7 +77,7 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 #  Создать пользователя
 response = requests.post(
     f'http://127.0.0.1:8000/{str_route}user/create/',
-    json={'email': 'shop10@yandex.ru',
+    json={'email': 'shop1@yandex.ru',
           'password': 'Shop222Shop',
           'company': 'Test_company',
           'position': 'Manager',

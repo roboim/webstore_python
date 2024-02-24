@@ -95,6 +95,9 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
 
 
 def create_user_data(request, *args, **kwargs) -> Response:
+    """
+    Создать пользователя в базе данных и направить токен по почте
+    """
     user_data = {'email': '',
                  'password': '',
                  'company': '',
