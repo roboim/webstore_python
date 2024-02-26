@@ -12,8 +12,6 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     Прочитать yaml файл и выполнить запись в базу данных
     """
 
-    #  !!!!!!!!!!!!!! Добавить владельца магазина после аутентификации
-
     categories_created = 0
     categories_updated = 0
     products_created = 0
