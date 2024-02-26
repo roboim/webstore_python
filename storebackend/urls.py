@@ -1,13 +1,17 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView, TokenBlacklistView,
 )
 
 from storebackend.views import UserCreateView, CategoryView, CategoryCreateView, ProductView, ProductCreateView, \
-    SupplierCreateView, UserConfirmView
+    SupplierCreateView, UserConfirmView, UserContactView
 
 app_name = 'storebackend'
+
+r = DefaultRouter()
+r.register('user/contacts', UserContactView)
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -20,4 +24,4 @@ urlpatterns = [
     path('products/', ProductView.as_view(), name='products'),
     path('products/create/', ProductCreateView.as_view(), name='products-create'),
     path('supplier/data/', SupplierCreateView.as_view(), name='supplier-data'),
-]
+] + r.urls

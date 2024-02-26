@@ -2,9 +2,10 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
-from storebackend.models import Category, Product
-from storebackend.serializers import CategorySerializer, ProductSerializer
+from storebackend.models import Category, Product, Contact
+from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email
 
 
@@ -31,6 +32,21 @@ class UserConfirmView(APIView):
 
     def post(self, request, *args, **kwargs):
         return confirm_user_email(request, *args, **kwargs)
+
+
+class UserContactView(ModelViewSet):
+    """
+    Создание и редактирование контактов пользователя
+    """
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request, *args, **kwargs):
+        return Response({'text': 'hello'})
+
+    def create(self, request, *args, **kwargs):
+        pass
 
 
 class CategoryView(ListAPIView):

@@ -97,3 +97,10 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # )
 # print(response.status_code)
 # print(response.text)
+
+#  Проверка контактов пользователя
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}user/contacts/',
+)
+print(response.status_code)
+print(response.text)
