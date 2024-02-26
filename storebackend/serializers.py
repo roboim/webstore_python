@@ -1,12 +1,21 @@
 from rest_framework import serializers
 
-from storebackend.models import Category, Product, User, ConfirmEmailToken
+from storebackend.models import Category, Product, User, ConfirmEmailToken, Contact
+
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = ['id', 'user', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'phone']
+        read_only_fields = ['id']
 
 
 class UserSerializer(serializers.ModelSerializer):
+    contact_data = ContactSerializer(read_only=True, many=True)
+
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'company', 'position', 'username', 'type']
+        fields = ['id', 'first_name', 'last_name', 'email', 'company', 'position', 'username', 'type', 'contact_data']
         read_only_fields = ['id']
 
 
