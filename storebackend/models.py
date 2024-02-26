@@ -274,6 +274,9 @@ class OrderItem(models.Model):
 
 
 class ConfirmEmailToken(models.Model):
+    """
+    Класс модели ключа для подтверждения email
+    """
     objects = models.manager.Manager()
 
     class Meta:
@@ -289,15 +292,15 @@ class ConfirmEmailToken(models.Model):
         User,
         related_name='confirm_email_tokens',
         on_delete=models.CASCADE,
-        verbose_name=_("The User which is associated to this password reset token")
+        verbose_name=_("User's email confirmation token")
     )
 
     created_at = models.DateTimeField(
         auto_now_add=True,
-        verbose_name=_("When was this token generated")
+        verbose_name=_("Creation time")
     )
 
-    # Key field, though it is not the primary key of the model
+    # Confirmation key
     key = models.CharField(
         _("Key"),
         max_length=64,
@@ -311,4 +314,4 @@ class ConfirmEmailToken(models.Model):
         return super(ConfirmEmailToken, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "Password reset token for user {user}".format(user=self.user)
+        return "Email confirmation for {user}".format(user=self.user)
