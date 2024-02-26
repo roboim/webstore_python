@@ -99,13 +99,13 @@ class UserContactView(ModelViewSet):
         return Response(serializer.data)
 
 
-
 class CategoryView(ListAPIView):
     """
     Класс для просмотра категорий товаров
     """
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = [IsAdminUser]
 
 
 class CategoryCreateView(CreateAPIView):
@@ -115,14 +115,6 @@ class CategoryCreateView(CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUser]
-
-    # def post(self, request, *args, **kwargs):
-    #     serializer = CategorySerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         category = serializer.save()
-    #         return Response(CategorySerializer(category).data)
-    #     else:
-    #         return Response(serializer.errors)
 
 
 class ProductView(ListAPIView):
@@ -146,8 +138,10 @@ class SupplierCreateView(CreateAPIView):
     """
     Класс для создания/обновления данных поставщика
     """
-    permission_classes = [AllowAny]  # Задать согласно аутентификации поставщика!!!!
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
-        return read_yaml_write_to_db(request, *args, **kwargs)
-
+        if request.data['user_id'] == str(request.user.id):
+            return read_yaml_write_to_db(request, *args, **kwargs)
+        else:
+            return error_prompt(False, f'Please check: user_id', 400)

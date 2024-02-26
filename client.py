@@ -41,11 +41,12 @@ token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # # Обновить данные поставщика
 # with open(filename, 'rb') as f:
 #     files = {'upload_file': f.read()}
-# values = {'DB': 'postgres', 'OUT': 'yaml'}
+# values = {'DB': 'postgres', 'OUT': 'yaml', 'user_id': '43'}
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}supplier/data/',
 #     files=files,
-#     data=values
+#     data=values,
+#     headers={'Authorization': f'Bearer {token_admin}'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -106,20 +107,20 @@ token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Проверка контактов пользователя
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}user/contacts/',
-    headers={'Authorization': f'Bearer {token}'}
-)
-print(response.status_code)
-print(response.text)
-
-#
-# #  Добавить контакт пользователя
-# response = requests.post(
+# #  Проверка контактов пользователя
+# response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}user/contacts/',
-#     json={'user': 43, 'city': 'Brest', 'street': 'Mira', 'house': '1', 'structure': '', 'building': '', 'apartment': '', 'phone': '+712345667890'},
-#     headers={'Authorization': f'Bearer {token_admin}'}
+#     headers={'Authorization': f'Bearer {token}'}
 # )
 # print(response.status_code)
 # print(response.text)
+
+#
+#  Добавить контакт пользователя
+response = requests.post(
+    f'http://127.0.0.1:8000/{str_route}user/contacts/',
+    json={'user': 43, 'city': 'Yakutsk', 'street': 'Mira', 'house': '1', 'structure': '', 'building': '', 'apartment': '', 'phone': '+712345667890'},
+    headers={'Authorization': f'Bearer {token_admin}'}
+)
+print(response.status_code)
+print(response.text)

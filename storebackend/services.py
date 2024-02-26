@@ -30,7 +30,7 @@ def read_yaml_write_to_db(request, *args, **kwargs) -> Response:
     #  Магазин
     if type(import_data['shop']) is not str:
         return error_prompt(False, f"File didn't load. More than one shop", 400)
-    shop, status_result = Shop.objects.get_or_create(name=import_data['shop'])  # , user_id=request.user.id)
+    shop, status_result = Shop.objects.get_or_create(name=import_data['shop'], user_id=request.user.id)
     shop_name_db = shop.name
     if not status_result:
         if shop.user_id == request.user.id:
