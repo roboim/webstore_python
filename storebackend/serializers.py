@@ -6,7 +6,7 @@ from storebackend.models import Category, Product, User, ConfirmEmailToken, Cont
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ['id', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'phone', 'user']
+        fields = ['id', 'user', 'city', 'street', 'house', 'structure', 'building', 'apartment', 'phone']
         read_only_fields = ['id']
 
 
