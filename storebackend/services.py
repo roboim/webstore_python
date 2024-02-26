@@ -142,15 +142,12 @@ def confirm_user_email(request, *args, **kwargs) -> Response:
         email_confirmation = request.data['email']
         token = ConfirmEmailToken.objects.filter(user__email=email_confirmation,
                                                  key=request.data['token']).first()
-        if token:
-            token.user.is_active = True
-            token.user.save()
-            token.delete()
-            return Response({'Status': True,
-                             'description': f'Your email:{email_confirmation} has been confirmed. Please, get your '
-                                            f'access and refresh tokens via link webstore_python/token/'}, status=201)
-        else:
-            return error_prompt(False, f'Please, check user name or token', 400)
+        token.user.is_active = True
+        token.user.save()
+        token.delete()
+        return Response({'Status': True,
+                         'description': f'Your email:{email_confirmation} has been confirmed. Please, get your '
+                                        f'access and refresh tokens via link webstore_python/token/'}, status=201)
     except Exception as error:
         return error_prompt(False, f'Please check: {error}', 400)
 
