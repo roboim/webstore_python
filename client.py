@@ -6,7 +6,7 @@ import yaml
 str_route = 'api/v1/'       # API версия
 filename = 'shop1.yaml'     # Название тестового файла для обновления данных поставщика
 
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDE4NjgxLCJpYXQiOjE3MDg5MzIxNzQsImp0aSI6IjRmZjA2MmE5NDAxZjQ1Njg5NjNiZDM3Mzk4MDUzMzE3IiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.8ay4CXCTVLra_ecPu1eTJcHQPgaGUtBzJ68cGrX8Lo4"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDMzNjUzLCJpYXQiOjE3MDg5NDcyNTMsImp0aSI6IjU3ZTc0MDlmMzgwMzQwYjVhMmUzMDBlZmU0M2QxN2RhIiwidXNlcl9pZCI6InJvYm90ZWR1QHlhbmRleC5ydSJ9.hNiqRuYPXX3I_buNyXacvI1sqlU_yUc0CKS7aSFtv7Y"
 
 # response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}categories/'
@@ -55,8 +55,8 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # print(response.status_code)
 # print(response.text)
 
-# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTUyNDI4MSwiaWF0IjoxNzA4OTMyMjgxLCJqdGkiOiJkNmFkMzZiN2I2MjI0YmJiYWFhNjQzYTEwZmVmZGE1MyIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.xryxzNn0gM7JcLxjcR8Ky_1ZaJMx1HqU9lpjristqyM"
-# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDE4NjgxLCJpYXQiOjE3MDg5MzIxNzQsImp0aSI6IjRmZjA2MmE5NDAxZjQ1Njg5NjNiZDM3Mzk4MDUzMzE3IiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.8ay4CXCTVLra_ecPu1eTJcHQPgaGUtBzJ68cGrX8Lo4"
+# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTUzOTI1MywiaWF0IjoxNzA4OTQ3MjUzLCJqdGkiOiI0ZTU5YjBlMjhjOTk0MWVhOTE2NzE0NTNkNDViNGI2YyIsInVzZXJfaWQiOiJyb2JvdGVkdUB5YW5kZXgucnUifQ.vJpWQp5pT9IaINQpDROCfiNmZ7wmaXhrJBdRzKlCcY4"
+# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDMzNjUzLCJpYXQiOjE3MDg5NDcyNTMsImp0aSI6IjU3ZTc0MDlmMzgwMzQwYjVhMmUzMDBlZmU0M2QxN2RhIiwidXNlcl9pZCI6InJvYm90ZWR1QHlhbmRleC5ydSJ9.hNiqRuYPXX3I_buNyXacvI1sqlU_yUc0CKS7aSFtv7Y"
 
 # #  Обновить токен
 # response = requests.post(
@@ -89,11 +89,11 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # print(response.status_code)
 # print(response.text)
 
-#  Подтвердить пользователя
-response = requests.post(
-    f'http://127.0.0.1:8000/{str_route}user/create/confirm/',
-    json={'email': 'shop1@yandex.ru',
-          'token': '807286e4234faab5c582884c02847'}
-)
-print(response.status_code)
-print(response.text)
+# #  Подтвердить пользователя
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}user/create/confirm/',
+#     json={'email': 'shop1@yandex.ru',
+#           'token': '807286e4234faab5c582884c02847'}
+# )
+# print(response.status_code)
+# print(response.text)
