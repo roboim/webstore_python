@@ -2,7 +2,8 @@ import yaml
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.response import Response
 
-from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter, User
+from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter, User, \
+    ConfirmEmailToken
 from storebackend.serializers import UserSerializer
 
 

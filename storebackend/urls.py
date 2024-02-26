@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from storebackend.views import UserCreateView, CategoryView, CategoryCreateView, ProductView, ProductCreateView, \
-    SupplierCreateView
+    SupplierCreateView, UserConfirmView
 
 app_name = 'storebackend'
 

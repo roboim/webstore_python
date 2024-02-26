@@ -28,6 +28,7 @@ class UserConfirmView(APIView):
     """
     Подтвердить почтовый адрес пользователя
     """
+    pass
 
 
 class CategoryView(ListAPIView):
