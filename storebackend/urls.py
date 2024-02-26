@@ -14,6 +14,7 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('user/create/', UserCreateView.as_view(), name='user-create'),
+    path('user/create/confirm', UserConfirmView.as_view(), name='user-cronfirm'),
     path('categories/', CategoryView.as_view(), name='categories'),
     path('categories/create/', CategoryCreateView.as_view(), name='categories-create'),
     path('products/', ProductView.as_view(), name='products'),

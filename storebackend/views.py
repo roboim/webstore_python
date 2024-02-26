@@ -24,6 +24,12 @@ class UserCreateView(CreateAPIView):
         return create_user_data(request, *args, **kwargs)
 
 
+class UserConfirmView(APIView):
+    """
+    Подтвердить почтовый адрес пользователя
+    """
+
+
 class CategoryView(ListAPIView):
     """
     Класс для просмотра категорий товаров

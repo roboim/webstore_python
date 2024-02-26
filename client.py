@@ -6,7 +6,7 @@ import yaml
 str_route = 'api/v1/'       # API версия
 filename = 'shop1.yaml'     # Название тестового файла для обновления данных поставщика
 
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTQ3Mjc3LCJpYXQiOjE3MDg2ODMyNzcsImp0aSI6ImFlZTYyOTAzMGY4MTRhYjdiZjQwNzJmZDcwMTE5OGVkIiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.rDqFfdvWtrSebX0Gt5dE73qkgoIap3DFw7txUmvX5OI"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDE4NjgxLCJpYXQiOjE3MDg5MzIxNzQsImp0aSI6IjRmZjA2MmE5NDAxZjQ1Njg5NjNiZDM3Mzk4MDUzMzE3IiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.8ay4CXCTVLra_ecPu1eTJcHQPgaGUtBzJ68cGrX8Lo4"
 
 # response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}categories/'
@@ -29,7 +29,7 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}products/create/',
-#     json={'name': 'Продукт 1012', 'category': 1},
+#     json={'name': 'Продукт 1032', 'category': 1},
 #     headers={'Authorization': f'Bearer {token}'}
 # )
 # print(response.status_code)
@@ -50,18 +50,18 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # #  Получить токен
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}token/',
-#     json={'email': 'admin@admin.ru', 'password': 'admin'}
+#     json={'email': 'shop1@yandex.ru', 'password': 'Shop222Shop'}
 # )
 # print(response.status_code)
 # print(response.text)
 
-# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTI3NTQ1MywiaWF0IjoxNzA4NjgzNDUzLCJqdGkiOiIxYzczMDk2ZDBiMTQ0NTI1Yjg3ZGRkYzk4MWIzNTM3NCIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.FxCGiK4LPrdKXPkXqCwJx7KQCXXDR499Rxsd5V0L9Uc"
-# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5NTQ3NDUzLCJpYXQiOjE3MDg2ODMyNzcsImp0aSI6IjFkNzMyMGI2ZGJmZDRkNGQ4NjliNjcyNTMwMDY3NGJlIiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.ixITH2PpQZIVm1rHr69ws07985IzEbRAr3tkW1Adzqg"
+# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTUyNDI4MSwiaWF0IjoxNzA4OTMyMjgxLCJqdGkiOiJkNmFkMzZiN2I2MjI0YmJiYWFhNjQzYTEwZmVmZGE1MyIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.xryxzNn0gM7JcLxjcR8Ky_1ZaJMx1HqU9lpjristqyM"
+# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDE4NjgxLCJpYXQiOjE3MDg5MzIxNzQsImp0aSI6IjRmZjA2MmE5NDAxZjQ1Njg5NjNiZDM3Mzk4MDUzMzE3IiwidXNlcl9pZCI6ImFkbWluQGFkbWluLnJ1In0.8ay4CXCTVLra_ecPu1eTJcHQPgaGUtBzJ68cGrX8Lo4"
 
 # #  Обновить токен
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}token/refresh/',
-#     json={'email': 'admin@admin.ru', 'password': 'admin', 'refresh':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTI3NTI3NywiaWF0IjoxNzA4NjgzMjc3LCJqdGkiOiI3Yjk1ODY5MWZmZjI0ZjdlOTNkZGNiYzg5NDc1NjZhNiIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.2y6tkpLe6GIvQKNRySWDN2bHmS-EBervxrKc8ulZok4'}
+#     json={'email': 'admin@admin.ru', 'password': 'admin', 'refresh':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTUyNDE3NCwiaWF0IjoxNzA4OTMyMTc0LCJqdGkiOiJiMTIyYzNiOTVlMzg0YzhkOWY3YjdiOTAzNmI5NmUzNSIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.mvdR0DhtQpFX1e93D5_YwAIixqETcUhM1CR-mfMB8wk'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -74,17 +74,17 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # print(response.status_code)
 # print(response.text)
 
-#  Создать пользователя
-response = requests.post(
-    f'http://127.0.0.1:8000/{str_route}user/create/',
-    json={'email': 'shop1@yandex.ru',
-          'password': 'Shop222Shop',
-          'company': 'Test_company',
-          'position': 'Manager',
-          'username': 'Ilya',
-          'type': 'shop',
-          'first_name': 'Ilya',
-          'last_name': 'Net'}
-)
-print(response.status_code)
-print(response.text)
+# #  Создать пользователя
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}user/create/',
+#     json={'email': 'shop1@yandex.ru',
+#           'password': 'Shop222Shop',
+#           'company': 'Test_company',
+#           'position': 'Manager',
+#           'username': 'Ilya',
+#           'type': 'shop',
+#           'first_name': 'Ilya',
+#           'last_name': 'Net'}
+# )
+# print(response.status_code)
+# print(response.text)

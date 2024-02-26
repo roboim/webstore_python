@@ -16,5 +16,9 @@ def new_user_created_signal(sender: Type[User], instance: User, created: bool, *
     Отправка письма для подтверждения регистрации
     """
     if created and not instance.is_active:
-        message_body = f"Добрый день, {instance.first_name}! Если Вы не регистрировались в магазине, пожалуйста, сообщите администратору."
-        send_mail('Вы зарегистрировались в webstore_python', message_body, settings.EMAIL_HOST_USER, [instance.email])
+        message_body = (
+            f"Добрый день, {instance.first_name}! Если Вы не регистрировались в магазине, пожалуйста, "
+            f"сообщите администратору. "
+            f"Для авторизации воспользуйтесь url: webstore_python/token/ для получения access и refresh токенов.")
+        send_mail('Вы зарегистрировались в webstore_python', message_body,
+                  settings.EMAIL_HOST_USER, [instance.email])
