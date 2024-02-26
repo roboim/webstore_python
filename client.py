@@ -6,7 +6,10 @@ import yaml
 str_route = 'api/v1/'       # API версия
 filename = 'shop1.yaml'     # Название тестового файла для обновления данных поставщика
 
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDMzNjUzLCJpYXQiOjE3MDg5NDcyNTMsImp0aSI6IjU3ZTc0MDlmMzgwMzQwYjVhMmUzMDBlZmU0M2QxN2RhIiwidXNlcl9pZCI6InJvYm90ZWR1QHlhbmRleC5ydSJ9.hNiqRuYPXX3I_buNyXacvI1sqlU_yUc0CKS7aSFtv7Y"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDQ0ODg0LCJpYXQiOjE3MDg5NTg0ODQsImp0aSI6ImE2MTYyNjM5Y2VlNDRhZmU4ZWNjNTRmNjA1NmRiNmUzIiwidXNlcl9pZCI6InNob3BAeWFuZGV4LnJ1In0.EdwuPWBtz0DSirJMF1A68eKRPOJYNQmVL45iypcGgGs"
+token_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU1MDQ4NCwiaWF0IjoxNzA4OTU4NDg0LCJqdGkiOiJjZDQyYjkyMjUxYjA0YTQ0YmI1Njg0NmYzMWUyMWE0NyIsInVzZXJfaWQiOiJzaG9wQHlhbmRleC5ydSJ9.5mGvRmJfB7nRyyHd7pjHSjRdb2tiMJVwZb3Qiyjmcvc"
+token_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDQwMzI0LCJpYXQiOjE3MDg5NTM5MjQsImp0aSI6Ijg5YzVlNzFjZDhhYjQ2Y2ViYWM4NWY5ZGI5OTdlYzI4IiwidXNlcl9pZCI6ImFkbWluQHlhbmRleC5ydSJ9.wXqfDeNXFalwOc9yv2Ump7pouHlk0duEmfF-ewVoXTY"
+token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU0NTkyNCwiaWF0IjoxNzA4OTUzOTI0LCJqdGkiOiIwNzJhYTY1NWQ1ZTQ0MzIzODIyYmRlNTVjZDhjNTdlMiIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.SjEZHJ_Xt_LF_ICQMREsItexgLmDDq0J1rG59HpNGAY"
 
 # response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}categories/'
@@ -16,7 +19,7 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}categories/create/',
-#     json={'name': 'Категория 11', 'shops': []}
+#     json={'name': 'Категория 12', 'shops': []}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -29,8 +32,8 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}products/create/',
-#     json={'name': 'Продукт 1032', 'category': 1},
-#     headers={'Authorization': f'Bearer {token}'}
+#     json={'name': 'Продукт 1034', 'category': 1},
+#     headers={'Authorization': f'Bearer {token_admin}'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -50,13 +53,10 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # #  Получить токен
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}token/',
-#     json={'email': 'shop1@yandex.ru', 'password': 'Shop222Shop'}
+#     json={'email': 'shop@yandex.ru', 'password': 'admin1admin'}
 # )
 # print(response.status_code)
 # print(response.text)
-
-# "refresh":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTUzOTI1MywiaWF0IjoxNzA4OTQ3MjUzLCJqdGkiOiI0ZTU5YjBlMjhjOTk0MWVhOTE2NzE0NTNkNDViNGI2YyIsInVzZXJfaWQiOiJyb2JvdGVkdUB5YW5kZXgucnUifQ.vJpWQp5pT9IaINQpDROCfiNmZ7wmaXhrJBdRzKlCcY4"
-# "access":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDMzNjUzLCJpYXQiOjE3MDg5NDcyNTMsImp0aSI6IjU3ZTc0MDlmMzgwMzQwYjVhMmUzMDBlZmU0M2QxN2RhIiwidXNlcl9pZCI6InJvYm90ZWR1QHlhbmRleC5ydSJ9.hNiqRuYPXX3I_buNyXacvI1sqlU_yUc0CKS7aSFtv7Y"
 
 # #  Обновить токен
 # response = requests.post(
@@ -77,8 +77,8 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # #  Создать пользователя
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}user/create/',
-#     json={'email': 'shop1@yandex.ru',
-#           'password': 'Shop222Shop',
+#     json={'email': 'shop@yandex.ru',
+#           'password': 'admin1admin',
 #           'company': 'Test_company',
 #           'position': 'Manager',
 #           'username': 'Ilya',
@@ -92,8 +92,16 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # #  Подтвердить пользователя
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}user/create/confirm/',
-#     json={'email': 'shop1@yandex.ru',
-#           'token': '807286e4234faab5c582884c02847'}
+#     json={'email': 'admin@yandex.ru',
+#           'token': '149988f5a6a3fa5bb1287b4b3cd2a9fdabf6079d6e3f1e'}
+# )
+# print(response.status_code)
+# print(response.text)
+
+# #  Проверка контактов пользователя
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}user/contacts/',
+#     headers={'Authorization': f'Bearer {token_admin}'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -101,6 +109,17 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 #  Проверка контактов пользователя
 response = requests.get(
     f'http://127.0.0.1:8000/{str_route}user/contacts/',
+    headers={'Authorization': f'Bearer {token}'}
 )
 print(response.status_code)
 print(response.text)
+
+#
+# #  Добавить контакт пользователя
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}user/contacts/',
+#     json={'user': 43, 'city': 'Brest', 'street': 'Mira', 'house': '1', 'structure': '', 'building': '', 'apartment': '', 'phone': '+712345667890'},
+#     headers={'Authorization': f'Bearer {token_admin}'}
+# )
+# print(response.status_code)
+# print(response.text)
