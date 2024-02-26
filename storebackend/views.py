@@ -42,8 +42,8 @@ class UserContactView(ModelViewSet):
     serializer_class = ContactSerializer
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, *args, **kwargs):
-        return Response({'text': 'hello'})
+    # def list(self, request, *args, **kwargs):
+    #     return Response({'text': 'hello'})
 
     def create(self, request, *args, **kwargs):
         pass
