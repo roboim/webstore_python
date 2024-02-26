@@ -134,6 +134,27 @@ def create_user_data(request, *args, **kwargs) -> Response:
                     status=201)
 
 
+def confirm_user_email(request, *args, **kwargs) -> Response:
+    """
+    Активировать пользователя в базе данных
+    """
+    try:
+        email_confirmation = request.data['email']
+        token = ConfirmEmailToken.objects.filter(user__email=email_confirmation,
+                                                 key=request.data['token']).first()
+        if token:
+            token.user.is_active = True
+            token.user.save()
+            token.delete()
+            return Response({'Status': True,
+                             'description': f'Your email:{email_confirmation} has been confirmed. Please, get your '
+                                            f'access and refresh tokens via link webstore_python/token/'}, status=201)
+        else:
+            return error_prompt(False, f'Please, check user name or token', 400)
+    except Exception as error:
+        return error_prompt(False, f'Please check: {error}', 400)
+
+
 def error_prompt(status_data: bool, error_data: str, code_data: int) -> Response:
     """
     Вернуть сообщение об ошибке

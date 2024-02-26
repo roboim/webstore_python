@@ -74,17 +74,26 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 # print(response.status_code)
 # print(response.text)
 
-#  Создать пользователя
+# #  Создать пользователя
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}user/create/',
+#     json={'email': 'shop1@yandex.ru',
+#           'password': 'Shop222Shop',
+#           'company': 'Test_company',
+#           'position': 'Manager',
+#           'username': 'Ilya',
+#           'type': 'shop',
+#           'first_name': 'Ilya',
+#           'last_name': 'Net'}
+# )
+# print(response.status_code)
+# print(response.text)
+
+#  Подтвердить пользователя
 response = requests.post(
-    f'http://127.0.0.1:8000/{str_route}user/create/',
+    f'http://127.0.0.1:8000/{str_route}user/create/confirm/',
     json={'email': 'shop1@yandex.ru',
-          'password': 'Shop222Shop',
-          'company': 'Test_company',
-          'position': 'Manager',
-          'username': 'Ilya',
-          'type': 'shop',
-          'first_name': 'Ilya',
-          'last_name': 'Net'}
+          'token': '807286e4234faab5c582884c02847'}
 )
 print(response.status_code)
 print(response.text)

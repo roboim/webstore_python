@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from storebackend.models import Category, Product
 from storebackend.serializers import CategorySerializer, ProductSerializer
-from storebackend.services import read_yaml_write_to_db, create_user_data
+from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email
 
 
 # @api_view(['GET'])
@@ -28,7 +28,9 @@ class UserConfirmView(APIView):
     """
     Подтвердить почтовый адрес пользователя
     """
-    pass
+
+    def post(self, request, *args, **kwargs):
+        return confirm_user_email(request, *args, **kwargs)
 
 
 class CategoryView(ListAPIView):

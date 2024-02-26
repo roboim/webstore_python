@@ -19,7 +19,7 @@ def new_user_created_signal(sender: Type[User], instance: User, created: bool, *
         token, _ = ConfirmEmailToken.objects.get_or_create(user_id=instance.pk)
         message_body = (
             f"Добрый день, {instance.first_name}! Если Вы не регистрировались в магазине, пожалуйста, "
-            f"сообщите администратору. "
+            f"сообщите администратору. /n"
             f"Для авторизации воспользуйтесь url: webstore_python/user/create/confirm и укажите "
             f"токен: {token.key}")
         send_mail('Вы зарегистрировались в webstore_python', message_body,
