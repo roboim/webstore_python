@@ -1,4 +1,4 @@
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView
@@ -143,9 +143,12 @@ class SupplierCreateView(CreateAPIView):
     """
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(description='"upload_file" is name of file. '
-                               'values = {"DB": "postgres", "OUT": "yaml", "user_id": "43"}. '
-                               'files=files, data=values', methods=['POST'])
+    @extend_schema(parameters=[
+        OpenApiParameter(name='data', description='Additional information', required=True, type=dict),
+        OpenApiParameter(name='files', description='upload_file', required=True, type=str)
+    ], description='"upload_file" is name of file.'
+                   'values = {"DB": "postgres", "OUT": "yaml", "user_id": "43"}. '
+                   'files=files, data=values', methods=['POST'])
     @action(detail=True, methods=['post'])
     def post(self, request, *args, **kwargs):
         if request.data['user_id'] == str(request.user.id):
