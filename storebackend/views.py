@@ -102,6 +102,26 @@ class UserContactView(ModelViewSet):
         return Response(serializer.data)
 
 
+class CartView(APIView):
+    """
+    Класс для обработки корзины
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        """
+        Получить информацию по корзине
+        """
+        user_name = request.user.username
+        return Response({'Status': 'test', 'description': f'{user_name}'}, status=200)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Создать заказ в корзине
+        """
+        user_name = request.user.username
+        return Response({'Status': 'test', 'description': f'{user_name}'}, status=200)
+
 class CategoryView(ListAPIView):
     """
     Класс для просмотра категорий товаров

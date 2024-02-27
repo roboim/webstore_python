@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 )
 
 from storebackend.views import UserCreateView, CategoryView, CategoryCreateView, ProductView, ProductCreateView, \
-    SupplierCreateView, UserConfirmView, UserContactView, SupplierRetrieveUpdate
+    SupplierCreateView, UserConfirmView, UserContactView, SupplierRetrieveUpdate, CartView
 
 app_name = 'storebackend'
 
@@ -25,4 +25,5 @@ urlpatterns = [
     path('products/create/', ProductCreateView.as_view(), name='products-create'),
     path('supplier/data/', SupplierCreateView.as_view(), name='supplier-data'),
     path('supplier/status/<pk>/', SupplierRetrieveUpdate.as_view(), name='supplier-status'),
+    path('cart/', CartView.as_view(), name='cart'),
 ] + r.urls

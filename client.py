@@ -11,13 +11,16 @@ token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZX
 token_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU1MDQ4NCwiaWF0IjoxNzA4OTU4NDg0LCJqdGkiOiJjZDQyYjkyMjUxYjA0YTQ0YmI1Njg0NmYzMWUyMWE0NyIsInVzZXJfaWQiOiJzaG9wQHlhbmRleC5ydSJ9.5mGvRmJfB7nRyyHd7pjHSjRdb2tiMJVwZb3Qiyjmcvc"
 token_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MTI3NDAwLCJpYXQiOjE3MDg5NTM5MjQsImp0aSI6ImRkMWEwZTkyZWRhNjQxYjBiMTBjMzJmNDUxMTJmNzg2IiwidXNlcl9pZCI6ImFkbWluQHlhbmRleC5ydSJ9.tTZAz3ip5Gsmc5zWpus2gWf8waEKUNe6lXFBWU_NuYc"
 token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTYzMzAwMCwiaWF0IjoxNzA5MDQxMDAwLCJqdGkiOiJhNGQwNmQ0ZjI0MzE0N2Y1YWUwMzNkYjE1NGM2ZDdiYyIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.luVlcbE9Lyv4zabBXnI8SIJZk91u0Qqv8hSPm0zVKJs"
+token_buyer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MTM2NDE5LCJpYXQiOjE3MDkwNTAwMTksImp0aSI6Ijg5ODcwYTlkMjA3NTQxOTQ4OGFkNmZkNTJhYzhiZjVhIiwidXNlcl9pZCI6ImJ1eWVyQHlhbmRleC5ydSJ9.zmQ5O9r43wqVhUPyqiXVPO7OyaIOwpm_Va1xgT4AKP0"
+token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTY0MjAxOSwiaWF0IjoxNzA5MDUwMDE5LCJqdGkiOiJmMDU1MmM2MTY4NDI0MDVkOTY3OTkwYTc0Nzc3ZDBmOSIsInVzZXJfaWQiOiJidXllckB5YW5kZXgucnUifQ.nQZKIgnJVHhucZ4EnfCJdEd0OltdvEJjXcuZfTE9ClE"
 
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}categories/',
-    headers={'Authorization': f'Bearer {token_admin}'}
-)
-print(response.status_code)
-print(response.text)
+
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}categories/',
+#     headers={'Authorization': f'Bearer {token_admin}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}categories/create/',
@@ -56,7 +59,7 @@ print(response.text)
 # #  Получить токен
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}token/',
-#     json={'email': 'shop@yandex.ru', 'password': 'admin1admin'}
+#     json={'email': 'buyer@yandex.ru', 'password': 'admin1admin'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -97,14 +100,14 @@ print(response.text)
 # #  Создать пользователя
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}user/create/',
-#     json={'email': 'shop@yandex.ru',
+#     json={'email': 'buyer@yandex.ru',
 #           'password': 'admin1admin',
-#           'company': 'Test_company',
-#           'position': 'Manager',
-#           'username': 'Ilya',
-#           'type': 'shop',
-#           'first_name': 'Ilya',
-#           'last_name': 'Net'}
+#           'company': 'Buyer',
+#           'position': 'engineer',
+#           'username': 'Maxim',
+#           'type': 'buyer',
+#           'first_name': 'Maxim',
+#           'last_name': 'Guest'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -112,8 +115,8 @@ print(response.text)
 # #  Подтвердить пользователя
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}user/create/confirm/',
-#     json={'email': 'admin@yandex.ru',
-#           'token': '149988f5a6a3fa5bb1287b4b3cd2a9fdabf6079d6e3f1e'}
+#     json={'email': 'buyer@yandex.ru',
+#           'token': 'e55fb6dac987a65a362daddb536222f789eec063d8438b'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -143,3 +146,11 @@ print(response.text)
 # )
 # print(response.status_code)
 # print(response.text)
+
+#  Проверка корзины пользователя
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}cart/',
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)

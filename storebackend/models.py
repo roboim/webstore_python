@@ -235,6 +235,7 @@ class Order(models.Model):
     """
     Класс модели заказа
     """
+    objects = models.manager.Manager()
     user = models.ForeignKey(User, verbose_name='Пользователь',
                              related_name='orders', blank=True,
                              on_delete=models.CASCADE)
