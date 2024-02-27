@@ -9,14 +9,15 @@ shop_id = 1                # Номер тестового магазина
 
 token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDQ0ODg0LCJpYXQiOjE3MDg5NTg0ODQsImp0aSI6ImE2MTYyNjM5Y2VlNDRhZmU4ZWNjNTRmNjA1NmRiNmUzIiwidXNlcl9pZCI6InNob3BAeWFuZGV4LnJ1In0.EdwuPWBtz0DSirJMF1A68eKRPOJYNQmVL45iypcGgGs"
 token_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU1MDQ4NCwiaWF0IjoxNzA4OTU4NDg0LCJqdGkiOiJjZDQyYjkyMjUxYjA0YTQ0YmI1Njg0NmYzMWUyMWE0NyIsInVzZXJfaWQiOiJzaG9wQHlhbmRleC5ydSJ9.5mGvRmJfB7nRyyHd7pjHSjRdb2tiMJVwZb3Qiyjmcvc"
-token_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDQwMzI0LCJpYXQiOjE3MDg5NTM5MjQsImp0aSI6Ijg5YzVlNzFjZDhhYjQ2Y2ViYWM4NWY5ZGI5OTdlYzI4IiwidXNlcl9pZCI6ImFkbWluQHlhbmRleC5ydSJ9.wXqfDeNXFalwOc9yv2Ump7pouHlk0duEmfF-ewVoXTY"
-token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU0NTkyNCwiaWF0IjoxNzA4OTUzOTI0LCJqdGkiOiIwNzJhYTY1NWQ1ZTQ0MzIzODIyYmRlNTVjZDhjNTdlMiIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.SjEZHJ_Xt_LF_ICQMREsItexgLmDDq0J1rG59HpNGAY"
+token_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MTI3NDAwLCJpYXQiOjE3MDg5NTM5MjQsImp0aSI6ImRkMWEwZTkyZWRhNjQxYjBiMTBjMzJmNDUxMTJmNzg2IiwidXNlcl9pZCI6ImFkbWluQHlhbmRleC5ydSJ9.tTZAz3ip5Gsmc5zWpus2gWf8waEKUNe6lXFBWU_NuYc"
+token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTYzMzAwMCwiaWF0IjoxNzA5MDQxMDAwLCJqdGkiOiJhNGQwNmQ0ZjI0MzE0N2Y1YWUwMzNkYjE1NGM2ZDdiYyIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.luVlcbE9Lyv4zabBXnI8SIJZk91u0Qqv8hSPm0zVKJs"
 
-# response = requests.get(
-#     f'http://127.0.0.1:8000/{str_route}categories/'
-# )
-# print(response.status_code)
-# print(response.text)
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}categories/',
+    headers={'Authorization': f'Bearer {token_admin}'}
+)
+print(response.status_code)
+print(response.text)
 
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}categories/create/',
@@ -63,7 +64,7 @@ token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # #  Обновить токен
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}token/refresh/',
-#     json={'email': 'admin@admin.ru', 'password': 'admin', 'refresh':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTUyNDE3NCwiaWF0IjoxNzA4OTMyMTc0LCJqdGkiOiJiMTIyYzNiOTVlMzg0YzhkOWY3YjdiOTAzNmI5NmUzNSIsInVzZXJfaWQiOiJhZG1pbkBhZG1pbi5ydSJ9.mvdR0DhtQpFX1e93D5_YwAIixqETcUhM1CR-mfMB8wk'}
+#     json={'email': 'admin@yandex.ru', 'password': 'admin1admin', 'refresh':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU0NTkyNCwiaWF0IjoxNzA4OTUzOTI0LCJqdGkiOiIwNzJhYTY1NWQ1ZTQ0MzIzODIyYmRlNTVjZDhjNTdlMiIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.SjEZHJ_Xt_LF_ICQMREsItexgLmDDq0J1rG59HpNGAY'}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -76,23 +77,22 @@ token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-# Запросить статус магазина
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}supplier/status/{shop_id}/',
-    headers={'Authorization': f'Bearer {token}'}
-)
-print(response.status_code)
-print(response.text)
-
-# Обновить статус магазина
-response = requests.patch(
-    f'http://127.0.0.1:8000/{str_route}supplier/status/{shop_id}/',
-    json={'state': 'True'},
-    headers={'Authorization': f'Bearer {token}'}
-)
-print(response.status_code)
-print(response.text)
-
+# # Запросить статус магазина
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}supplier/status/{shop_id}/',
+#     headers={'Authorization': f'Bearer {token}'}
+# )
+# print(response.status_code)
+# print(response.text)
+#
+# # Обновить статус магазина
+# response = requests.patch(
+#     f'http://127.0.0.1:8000/{str_route}supplier/status/{shop_id}/',
+#     json={'state': 'True'},
+#     headers={'Authorization': f'Bearer {token}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Создать пользователя
 # response = requests.post(
