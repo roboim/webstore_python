@@ -5,6 +5,7 @@ import yaml
 
 str_route = 'api/v1/'       # API версия
 filename = 'shop1.yaml'     # Название тестового файла для обновления данных поставщика
+shop_id = 1                # Номер тестового магазина
 
 token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDQ0ODg0LCJpYXQiOjE3MDg5NTg0ODQsImp0aSI6ImE2MTYyNjM5Y2VlNDRhZmU4ZWNjNTRmNjA1NmRiNmUzIiwidXNlcl9pZCI6InNob3BAeWFuZGV4LnJ1In0.EdwuPWBtz0DSirJMF1A68eKRPOJYNQmVL45iypcGgGs"
 token_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU1MDQ4NCwiaWF0IjoxNzA4OTU4NDg0LCJqdGkiOiJjZDQyYjkyMjUxYjA0YTQ0YmI1Njg0NmYzMWUyMWE0NyIsInVzZXJfaWQiOiJzaG9wQHlhbmRleC5ydSJ9.5mGvRmJfB7nRyyHd7pjHSjRdb2tiMJVwZb3Qiyjmcvc"
@@ -38,18 +39,18 @@ token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-# Обновить данные поставщика
-with open(filename, 'rb') as f:
-    files = {'upload_file': f.read()}
-values = {'DB': 'postgres', 'OUT': 'yaml', 'user_id': '43'}
-response = requests.post(
-    f'http://127.0.0.1:8000/{str_route}supplier/data/',
-    files=files,
-    data=values,
-    headers={'Authorization': f'Bearer {token_admin}'}
-)
-print(response.status_code)
-print(response.text)
+# # Обновить данные поставщика
+# with open(filename, 'rb') as f:
+#     files = {'upload_file': f.read()}
+# values = {'DB': 'postgres', 'OUT': 'yaml', 'user_id': '43'}
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}supplier/data/',
+#     files=files,
+#     data=values,
+#     headers={'Authorization': f'Bearer {token_admin}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Получить токен
 # response = requests.post(
@@ -74,6 +75,24 @@ print(response.text)
 # )
 # print(response.status_code)
 # print(response.text)
+
+# Запросить статус магазина
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}supplier/status/{shop_id}/',
+    headers={'Authorization': f'Bearer {token}'}
+)
+print(response.status_code)
+print(response.text)
+
+# Обновить статус магазина
+response = requests.patch(
+    f'http://127.0.0.1:8000/{str_route}supplier/status/{shop_id}/',
+    json={'state': 'True'},
+    headers={'Authorization': f'Bearer {token}'}
+)
+print(response.status_code)
+print(response.text)
+
 
 # #  Создать пользователя
 # response = requests.post(

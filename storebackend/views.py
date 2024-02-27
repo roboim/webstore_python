@@ -1,12 +1,13 @@
 from rest_framework import status
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from storebackend.models import Category, Product, Contact
-from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer
+from storebackend.models import Category, Product, Contact, Shop
+from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, \
+    SupplierRetrieveUpdateSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
 
 
@@ -145,3 +146,30 @@ class SupplierCreateView(CreateAPIView):
             return read_yaml_write_to_db(request, *args, **kwargs)
         else:
             return error_prompt(False, f'Please check: user_id', 400)
+
+
+class SupplierRetrieveUpdate(APIView):
+    """
+    Класс для просмотра/обновления статуса работы поставщика
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        if request.user.type != 'shop':
+            return error_prompt(False, f'Available only for shop', 400)
+        try:
+            shop = Shop.objects.get(id=kwargs['pk'], user_id=request.user.id)
+            return Response({'Status': shop.state, 'description': f'{shop.name}'}, status=200)
+        except Exception as error:
+            return error_prompt(False, f'Please check: user_id or shop_id. {error}', 400)
+
+    def patch(self, request, *args, **kwargs):
+        if request.user.type != 'shop':
+            return error_prompt(False, f'Available only for shop', 400)
+        try:
+            shop_id = kwargs['pk']
+            state = bool(request.data.get('state'))
+            Shop.objects.filter(id=shop_id, user_id=request.user.id).update(state=state)
+            return Response({'Status': state, 'description': f'Shop id: {shop_id}'}, status=200)
+        except Exception as error:
+            return error_prompt(False, f'Please check: user_id or shop_id. {error}', 400)
