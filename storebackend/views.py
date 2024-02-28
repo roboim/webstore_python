@@ -1,17 +1,14 @@
-from pprint import pprint
-
-from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from storebackend.models import Category, Product, Contact, Shop, Order
-from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, \
-    SupplierRetrieveUpdateSerializer
+from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo
+from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
 
 
@@ -122,13 +119,21 @@ class CartView(APIView):
         """
         Создать заказ в корзине
         """
-        user_name = request.user.username
+        user_id = request.user.id
         orders = request.data.get('orders')
-        if orders:
-            pprint(orders)
-            return Response({'Status': len(orders), 'description': f'{user_name}'}, status=200)
-        else:
-            return error_prompt(False, f'Please check order data', 400)
+        try:
+            for order in orders:
+                order_cur = Order.objects.create(user_id=user_id, state='cart')
+                for shop in order:
+                    for product in shop['products']:
+                        prodinfo_cur = ProductInfo.objects.get(shop_id=shop['shop_id'],
+                                                               product_id=product['product_id'])
+                        order_item = OrderItem.objects.create(order_id=order_cur.id, product_info_id=prodinfo_cur.id,
+                                                              quantity=product['quantity'])
+            return Response({'Status': True, 'description': f'Создано заказов: {len(orders)}'}, status=200)
+        except Exception as error:
+            return error_prompt(False, f'Please check: {error}', 400)
+
 
 class CategoryView(ListAPIView):
     """
