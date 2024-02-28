@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 from rest_framework import status
 from rest_framework.decorators import action
@@ -121,7 +123,12 @@ class CartView(APIView):
         Создать заказ в корзине
         """
         user_name = request.user.username
-        return Response({'Status': 'test', 'description': f'{user_name}'}, status=200)
+        orders = request.data.get('orders')
+        if orders:
+            pprint(orders)
+            return Response({'Status': len(orders), 'description': f'{user_name}'}, status=200)
+        else:
+            return error_prompt(False, f'Please check order data', 400)
 
 class CategoryView(ListAPIView):
     """

@@ -29,6 +29,7 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
+# # Запросить доступные продукты
 # response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}products/'
 # )
@@ -147,9 +148,27 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Проверка корзины пользователя
-response = requests.get(
+# #  Проверка корзины пользователя
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}cart/',
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
+
+#  Создание корзины пользователя
+response = requests.post(
     f'http://127.0.0.1:8000/{str_route}cart/',
+    json={'orders': [
+        [
+            {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '2'}, {'product_id': '5', 'quantity': '1'}]},
+            {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}
+        ],
+        [
+            {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '1'}]},
+            {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}]
+        ]
+    },
     headers={'Authorization': f'Bearer {token_buyer}'}
 )
 print(response.status_code)
