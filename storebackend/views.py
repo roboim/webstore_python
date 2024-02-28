@@ -1,3 +1,4 @@
+from django.db.models import F
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import status
 from rest_framework.decorators import action
@@ -8,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo
-from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer
+from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
 
 
@@ -111,9 +112,16 @@ class CartView(APIView):
         """
         Получить информацию по корзине
         """
-        user_cart = Order.objects.filter(user_id=request.user.id, state='cart')
-        serializer = OrderSerializer(user_cart, many=True)
-        return Response(serializer.data)
+        user_cart = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__price',
+                                             'quantity').filter(order_id__user_id=request.user.id,
+                                                                order_id__state='cart').order_by('order_id').annotate(
+            total_price=F('quantity') * F('product_info_id__price'))
+        data = list(user_cart)
+        total_cart = 0  # Так как 'price' - PositiveIntegerField
+        for line in data:
+            total_cart += int(line['total_price'])
+        data.append({'total_cart': total_cart})
+        return Response(data)
 
     def post(self, request, *args, **kwargs):
         """
