@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from storebackend.models import Category, Product, Contact, Shop
+from storebackend.models import Category, Product, Contact, Shop, Order
 from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, \
     SupplierRetrieveUpdateSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
@@ -113,7 +113,8 @@ class CartView(APIView):
         Получить информацию по корзине
         """
         user_name = request.user.username
-        return Response({'Status': 'test', 'description': f'{user_name}'}, status=200)
+        user_cart = Order.objects.filter(user_id=request.user.id, state='cart')
+        return Response({'Status': len(user_cart), 'description': f'{user_name}'}, status=200)
 
     def post(self, request, *args, **kwargs):
         """
