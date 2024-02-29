@@ -296,18 +296,6 @@ class OrderView(ModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
-    def list(self, request, *args, **kwargs):
-        user_orders = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__price',
-                                               'quantity').filter(order_id__user_id=request.user.id).exclude(
-            order_id__state='cart').order_by('order_id').annotate(
-            total_price=F('quantity') * F('product_info_id__price'))
-        data = list(user_orders)
-        total_cart = 0  # Так как 'price' - PositiveIntegerField
-        for line in data:
-            total_cart += int(line['total_price'])
-        data.append({'total_cart': total_cart})
-        return Response(data)
-
     def create(self, request, *args, **kwargs):
         try:
             order_id = request.data.get('order_id')
@@ -325,8 +313,8 @@ class OrderView(ModelViewSet):
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 
-    def destroy(self, request, *args, **kwargs):
-        return error_prompt(False, f'Delete method is not allowed', 405)
+    def retrieve(self, request, *args, **kwargs):
+        pass
 
     def update(self, request, *args, **kwargs):
         try:
@@ -349,3 +337,18 @@ class OrderView(ModelViewSet):
             return Response({'Status': True, 'description': f'Успешно отменён заказ: {order_cur.id}.'}, status=200)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
+
+    def destroy(self, request, *args, **kwargs):
+        return error_prompt(False, f'Delete method is not allowed', 405)
+
+    def list(self, request, *args, **kwargs):
+        user_orders = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__price',
+                                               'quantity').filter(order_id__user_id=request.user.id).exclude(
+            order_id__state='cart').order_by('order_id').annotate(
+            total_price=F('quantity') * F('product_info_id__price'))
+        data = list(user_orders)
+        total_cart = 0  # Так как 'price' - PositiveIntegerField
+        for line in data:
+            total_cart += int(line['total_price'])
+        data.append({'total_cart': total_cart})
+        return Response(data)
