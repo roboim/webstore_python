@@ -217,7 +217,7 @@ print(response.text)
 response = requests.post(
     f'http://127.0.0.1:8000/{str_route}order/',
     json={
-        'order_id': '51',
+        'order_id': '42',
         'state': 'new'
     },
     headers={'Authorization': f'Bearer {token_buyer}'}

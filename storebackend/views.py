@@ -296,6 +296,7 @@ class OrderView(ModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
+
     def create(self, request, *args, **kwargs):
         try:
             order_id = request.data.get('order_id')
@@ -305,6 +306,10 @@ class OrderView(ModelViewSet):
             order_cur = Order.objects.get(id=int(order_id))
             if order_cur.state != 'cart':
                 return error_prompt(False, f'Please contact admin user (order_s state is not "cart")', 400)
+            elif order_cur.user_id != request.user.id:
+                return error_prompt(False, f'Please check order_id', 400)
+            order_cur.state = 'new'
+            order_cur.save()
             return Response({'Status': True, 'description': f'Успешно размещён заказ: {order_id}.'}, status=201)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
