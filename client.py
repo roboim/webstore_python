@@ -242,10 +242,18 @@ print(response.text)
 # print(response.status_code)
 # print(response.text)
 
-#  Отмена заказа пользователем
-response = requests.patch(
-    f'http://127.0.0.1:8000/{str_route}order/42/',
-    json={'state': 'canceled'},
+# #  Отмена заказа пользователем
+# response = requests.patch(
+#     f'http://127.0.0.1:8000/{str_route}order/42/',
+#     json={'state': 'canceled'},
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
+
+#  Просмотр заказа пользователем
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}order/43/',
     headers={'Authorization': f'Bearer {token_buyer}'}
 )
 print(response.status_code)

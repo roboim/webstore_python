@@ -54,7 +54,7 @@ class UserContactView(ModelViewSet):
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            return error_prompt(False, f'Please check: user_id', 400)
+            return error_prompt(False, f'Please check: user_id', 401)
 
     def retrieve(self, request, *args, **kwargs):
         if request.data['user'] == request.user.id:
@@ -62,7 +62,7 @@ class UserContactView(ModelViewSet):
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
         else:
-            return error_prompt(False, f'Please check: user_id', 400)
+            return error_prompt(False, f'Please check: user_id', 401)
 
     def update(self, request, *args, **kwargs):
         if request.data['user'] == request.user.id:
@@ -79,7 +79,7 @@ class UserContactView(ModelViewSet):
 
             return Response(serializer.data)
         else:
-            return error_prompt(False, f'Please check: user_id', 400)
+            return error_prompt(False, f'Please check: user_id', 401)
 
     def destroy(self, request, *args, **kwargs):
         if request.data['user'] == request.user.id:
@@ -87,7 +87,7 @@ class UserContactView(ModelViewSet):
             self.perform_destroy(instance)
             return Response(status=status.HTTP_204_NO_CONTENT)
         else:
-            return error_prompt(False, f'Please check: user_id', 400)
+            return error_prompt(False, f'Please check: user_id', 401)
 
     def list(self, request, *args, **kwargs):
         # queryset = self.filter_queryset(self.get_queryset())
@@ -297,6 +297,7 @@ class OrderView(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
+        # ДОБАВИТЬ КОНТАКТ !!!!!
         try:
             order_id = request.data.get('order_id')
             state = request.data.get('state')
@@ -314,7 +315,19 @@ class OrderView(ModelViewSet):
             return error_prompt(False, f'Please check: {error}', 400)
 
     def retrieve(self, request, *args, **kwargs):
-        pass
+        try:
+            order_cur = Order.objects.get(id=int(kwargs['pk']))
+            if order_cur.user_id != request.user.id:
+                return error_prompt(False, f'Please check order_id', 401)
+            user_items = OrderItem.objects.values('product_info_id__external_id', 'product_info_id__model', 'product_info_id__price', 'quantity').filter(order_id=order_cur.id).annotate(total_price=F('quantity') * F('product_info_id__price'))
+            data = list(user_items)
+            total_order = 0  # Так как 'price' - PositiveIntegerField
+            for line in data:
+                total_order += int(line['total_price'])
+            data.append({'total_order': total_order})
+            return Response({'Status': True, 'description': data}, status=200)
+        except Exception as error:
+            return error_prompt(False, f'Please check: {error}', 400)
 
     def update(self, request, *args, **kwargs):
         try:
