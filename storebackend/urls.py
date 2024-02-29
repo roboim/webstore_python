@@ -6,12 +6,13 @@ from rest_framework_simplejwt.views import (
 )
 
 from storebackend.views import UserCreateView, CategoryView, CategoryCreateView, ProductView, ProductCreateView, \
-    SupplierCreateView, UserConfirmView, UserContactView, SupplierRetrieveUpdate, CartView
+    SupplierCreateView, UserConfirmView, UserContactView, SupplierRetrieveUpdate, CartView, OrderView
 
 app_name = 'storebackend'
 
 r = DefaultRouter()
 r.register('user/contacts', UserContactView)
+r.register('order', OrderView)
 
 urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

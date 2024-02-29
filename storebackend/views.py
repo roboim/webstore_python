@@ -9,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo
-from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer
+from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
 
 
@@ -286,3 +286,22 @@ class SupplierRetrieveUpdate(APIView):
             return Response({'Status': state, 'description': f'Shop id: {shop_id}'}, status=200)
         except Exception as error:
             return error_prompt(False, f'Please check: user_id or shop_id. {error}', 400)
+
+
+class OrderView(ModelViewSet):
+    """
+    Класс для работы с заказом
+    """
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()

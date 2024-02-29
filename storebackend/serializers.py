@@ -48,3 +48,11 @@ class SupplierRetrieveUpdateSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'url', 'user_data', 'state']
         read_only_fields = ['id', 'name', 'url', 'user_data']
 
+
+class OrderSerializer(serializers.ModelSerializer):
+    contact = ContactSerializer(read_only=True)
+
+    class Meta:
+        model = Order
+        fields = ['id', 'user', 'dt', 'state', 'contact']
+        read_only_fields = ['id']
