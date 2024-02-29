@@ -156,20 +156,39 @@ response = requests.get(
 print(response.status_code)
 print(response.text)
 
-# #  Создание корзины пользователя
-# response = requests.post(
-#     f'http://127.0.0.1:8000/{str_route}cart/',
-#     json={'orders': [
-#         [
-#             {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '2'}, {'product_id': '5', 'quantity': '1'}]},
-#             {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}
-#         ],
-#         [
-#             {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '1'}]},
-#             {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}]
-#         ]
-#     },
-#     headers={'Authorization': f'Bearer {token_buyer}'}
-# )
-# print(response.status_code)
-# print(response.text)
+#  Создание корзины пользователя
+response = requests.post(
+    f'http://127.0.0.1:8000/{str_route}cart/',
+    json={'orders': [
+        [
+            {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '2'}, {'product_id': '5', 'quantity': '1'}]},
+            {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}
+        ],
+        [
+            {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '1'}]},
+            {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}]
+        ]
+    },
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)
+
+#  Удаление позиций заказа пользователя
+response = requests.delete(
+    f'http://127.0.0.1:8000/{str_route}cart/',
+    json={'orders': [
+        [
+            {'order_id': '20'},
+            {'shop_id': '1', 'products': [{'product_id': '3'}, {'product_id': '5'}]},
+            {'shop_id': '2', 'products': [{'product_id': '6'}]}
+        ],
+        [
+            {'order_id': '21'},
+            {'shop_id': '2', 'products': [{'product_id': '6'}]}]
+        ]
+    },
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)

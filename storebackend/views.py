@@ -142,6 +142,32 @@ class CartView(APIView):
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 
+    def delete(self, request, *args, **kwargs):
+        """
+        Удалить позиции заказа в корзине
+        """
+        user_id = request.user.id
+        orders = request.data.get('orders')
+        deleted_order_items = list()
+        try:
+            for order in orders:
+                order_num = order[0]['order_id']
+                order_cur = Order.objects.get(user_id=user_id, state='cart', id=order_num)
+                order_shops = [order[i] for i in range(1, len(order))]
+                for shop in order_shops:
+                    print(shop)
+                    for product in shop['products']:
+                        OrderItem.objects.filter(order_id=order_cur.id, product_info_id__product_id=int(product['product_id'])).delete()
+                        deleted_order_items.append({order_cur.id: product['product_id']})
+                empty_order = OrderItem.objects.filter(order_id=order_cur.id)
+                if len(empty_order) == 0:
+                    Order.objects.filter(id=order_cur.id).delete()
+                    deleted_order_items.append({'Заказ': order_cur.id})
+            return Response({'Status': True, 'description': f'Успешно удалены: {deleted_order_items}.'}, status=200)
+        except Exception as error:
+            return error_prompt(False, f'Successfully Deleted: {deleted_order_items}. '
+                                       f'Please check: {error}', 400)
+
 
 class CategoryView(ListAPIView):
     """
