@@ -192,22 +192,22 @@ print(response.text)
 # print(response.status_code)
 # print(response.text)
 
-#  Изменение позиций заказа пользователя
-response = requests.put(
-    f'http://127.0.0.1:8000/{str_route}cart/',
-    json={'orders': [
-            [
-                {'order_id': '24'},
-                {'shop_id': '1', 'products': [{'product_id': '5', 'quantity': '2'}]},
-                {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '3'}]}
-            ],
-            [
-                {'order_id': '25'},
-                {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '4'}]}
-            ]
-        ]
-    },
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Изменение позиций заказа пользователя
+# response = requests.put(
+#     f'http://127.0.0.1:8000/{str_route}cart/',
+#     json={'orders': [
+#             [
+#                 {'order_id': '42'},
+#                 {'shop_id': '1', 'products': [{'product_id': '4', 'quantity': '77'}, {'product_id': '5', 'quantity': '78'}]},
+#                 {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '3'}]}
+#             ],
+#             [
+#                 {'order_id': '43'},
+#                 {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '4'}]}
+#             ]
+#         ]
+#     },
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)

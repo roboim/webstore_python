@@ -142,6 +142,42 @@ class CartView(APIView):
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 
+    def put(self, request, *args, **kwargs):
+        """
+        Редактировать заказ в корзине
+        """
+        user_id = request.user.id
+        orders = request.data.get('orders')
+        edited_order_items = list()
+        try:
+            for order in orders:
+                order_num = order[0]['order_id']
+                order_cur = Order.objects.get(user_id=user_id, state='cart', id=order_num)
+                order_shops = [order[i] for i in range(1, len(order))]
+                for shop in order_shops:
+                    for product in shop['products']:
+                        print(order_cur.id, int(product['product_id']), int(product['quantity']))
+                        result = OrderItem.objects.filter(order_id=order_cur.id,
+                                                          product_info_id__product_id=int(
+                                                              product['product_id'])).update(
+                            quantity=int(product['quantity']))
+                        new = False
+                        #  Создать позицию в заказе, если она отсутствовала
+                        if result == 0:
+                            prodinfo_cur = ProductInfo.objects.get(shop_id=shop['shop_id'],
+                                                                   product_id=product['product_id'])
+                            order_item = OrderItem.objects.create(order_id=order_cur.id,
+                                                                  product_info_id=prodinfo_cur.id,
+                                                                  quantity=product['quantity'])
+                            new = True
+                        edited_order_items.append(
+                            {'order_id': order_cur.id, 'product_id': int(product['product_id']),
+                             'quantity': int(product['quantity']), 'new': new})
+            return Response({'Status': True, 'description': f'Успешно изменены: {edited_order_items}.'}, status=200)
+        except Exception as error:
+            return error_prompt(False, f'Successfully Edited: {edited_order_items}. '
+                                       f'Please check: {error}', 400)
+
     def delete(self, request, *args, **kwargs):
         """
         Удалить позиции заказа в корзине
@@ -155,10 +191,11 @@ class CartView(APIView):
                 order_cur = Order.objects.get(user_id=user_id, state='cart', id=order_num)
                 order_shops = [order[i] for i in range(1, len(order))]
                 for shop in order_shops:
-                    print(shop)
                     for product in shop['products']:
-                        OrderItem.objects.filter(order_id=order_cur.id, product_info_id__product_id=int(product['product_id'])).delete()
+                        OrderItem.objects.filter(order_id=order_cur.id,
+                                                 product_info_id__product_id=int(product['product_id'])).delete()
                         deleted_order_items.append({order_cur.id: product['product_id']})
+                #  Удалить заказ, если в нём не осталось позиций
                 empty_order = OrderItem.objects.filter(order_id=order_cur.id)
                 if len(empty_order) == 0:
                     Order.objects.filter(id=order_cur.id).delete()
