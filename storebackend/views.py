@@ -298,7 +298,7 @@ class OrderView(ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         user_orders = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__price',
-                                             'quantity').filter(order_id__user_id=request.user.id).exclude(
+                                               'quantity').filter(order_id__user_id=request.user.id).exclude(
             order_id__state='cart').order_by('order_id').annotate(
             total_price=F('quantity') * F('product_info_id__price'))
         data = list(user_orders)
@@ -318,9 +318,34 @@ class OrderView(ModelViewSet):
             if order_cur.state != 'cart':
                 return error_prompt(False, f'Please contact admin user (order_s state is not "cart")', 400)
             elif order_cur.user_id != request.user.id:
-                return error_prompt(False, f'Please check order_id', 400)
+                return error_prompt(False, f'Please check order_id', 401)
             order_cur.state = 'new'
             order_cur.save()
             return Response({'Status': True, 'description': f'Успешно размещён заказ: {order_id}.'}, status=201)
+        except Exception as error:
+            return error_prompt(False, f'Please check: {error}', 400)
+
+    def destroy(self, request, *args, **kwargs):
+        return error_prompt(False, f'Delete method is not allowed', 405)
+
+    def update(self, request, *args, **kwargs):
+        try:
+            state = request.data.get('state')
+            if state != 'canceled':
+                return error_prompt(False, f'Please check state (not canceled)', 400)
+            order_cur = Order.objects.get(id=int(kwargs['pk']))
+            if order_cur.state == 'canceled':
+                return error_prompt(False, f'The order {order_cur.id} already canceled',
+                                    304)
+            elif order_cur.state != 'cart' and order_cur.state != 'new':
+                return error_prompt(False, f''
+                                           f'Please contact admin user (order_s state is not "cart" or "new")',
+                                    400)
+
+            elif order_cur.user_id != request.user.id:
+                return error_prompt(False, f'Please check order_id', 401)
+            order_cur.state = state
+            order_cur.save()
+            return Response({'Status': True, 'description': f'Успешно отменён заказ: {order_cur.id}.'}, status=200)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
