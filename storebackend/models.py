@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from django_rest_passwordreset.tokens import get_token_generator
 
 STATE_CHOICES = (
-    ('basket', 'Статус корзины'),
+    ('cart', 'Статус корзины'),
     ('new', 'Новый'),
     ('confirmed', 'Подтвержден'),
     ('assembled', 'Собран'),
