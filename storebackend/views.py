@@ -330,9 +330,9 @@ class OrderView(ModelViewSet):
         """
         Разместить заказ из корзины и указать контакт для связи
         **kwargs={
-        'order_id': '',
-        'state': '',
-        'contact_id': ''
+        'order_id': '' - номер заказа;
+        'state': 'new' - статус размещения заказа;
+        'contact_id': '' - номер контакта для связи.
         }
         """
         try:
