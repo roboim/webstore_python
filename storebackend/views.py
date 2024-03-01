@@ -226,7 +226,7 @@ class CategoryCreateView(CreateAPIView):
 
 class ProductView(ListAPIView):
     """
-    Класс для просмотра категорий товаров
+    Класс для просмотра товаров
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -234,11 +234,15 @@ class ProductView(ListAPIView):
 
 class ProductCreateView(CreateAPIView):
     """
-    Класс для создания категорий товаров
+    Класс для создания товаров
     """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
+
+
+class ProductInfoView(ListAPIView):
+    pass
 
 
 class SupplierCreateView(CreateAPIView):
