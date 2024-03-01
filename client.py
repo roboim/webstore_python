@@ -47,7 +47,7 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 
 #  Просмотр продукции
 response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}products/info/',
+    f'http://127.0.0.1:8000/{str_route}products/info/?shop_id=1&category_id=224',
     headers={'Authorization': f'Bearer {token_buyer}'}
 )
 print(response.status_code)

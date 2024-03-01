@@ -1,4 +1,4 @@
-from django.db.models import F
+from django.db.models import F, Q
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import status
 from rest_framework.decorators import action
@@ -249,10 +249,23 @@ class ProductInfoView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
-        queryset = ProductInfo.objects.all().distinct()
-        serializer = ProductDataSerializer(queryset, many=True)
+        try:
+            shop_id = request.query_params.get('shop_id')
+            category_id = request.query_params.get('category_id')
 
-        return Response(serializer.data)
+            query = Q(shop__state=True)
+            if shop_id:
+                query = query & Q(shop_id=shop_id)
+            if category_id:
+                query = query & Q(product__category_id=category_id)
+
+            queryset = ProductInfo.objects.filter(query).select_related('shop', 'product__category').distinct()
+            serializer = ProductDataSerializer(queryset, many=True)
+
+            return Response(serializer.data)
+
+        except Exception as error:
+            return error_prompt(False, f'Please check: {error}', 400)
 
 
 class SupplierCreateView(CreateAPIView):
