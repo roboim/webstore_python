@@ -454,7 +454,7 @@ class OrderView(ModelViewSet):
                                                         f'Товары забронированы.'},
                                         status=201)
                     else:
-                        return error_prompt(False, f'Common problem {modify}',
+                        return error_prompt(False, f'Common problem: 1001 {modify}',
                                             304)
                 # Иные случаи
                 order_data = OrderItem.objects.values('order_id', 'product_info_id',
