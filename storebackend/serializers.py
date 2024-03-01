@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from storebackend.models import Category, Product, User, ConfirmEmailToken, Contact, Shop, Order, OrderItem
+from storebackend.models import Category, Product, User, ConfirmEmailToken, Contact, Shop, Order, OrderItem, ProductInfo
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -37,6 +37,15 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'category']
+        read_only_fields = ['id']
+
+
+class ProductDataSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+
+    class Meta:
+        model = ProductInfo
+        fields = ['id', 'model', 'product', 'shop', 'quantity', 'price', 'price_rrc']
         read_only_fields = ['id']
 
 

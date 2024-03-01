@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo
-from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer
+from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer, \
+    ProductDataSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
 
 
@@ -236,13 +237,22 @@ class ProductCreateView(CreateAPIView):
     """
     Класс для создания товаров
     """
-    queryset = Product.objects.all()
+    queryset = ProductInfo.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsAdminUser]
 
 
-class ProductInfoView(ListAPIView):
-    pass
+class ProductInfoView(APIView):
+    """
+    Класс для просмотра товаров
+    """
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        queryset = ProductInfo.objects.all().distinct()
+        serializer = ProductDataSerializer(queryset, many=True)
+
+        return Response(serializer.data)
 
 
 class SupplierCreateView(CreateAPIView):
