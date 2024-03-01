@@ -223,18 +223,18 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.text)
 
 
-#  Создать заказ пользователя
-response = requests.post(
-    f'http://127.0.0.1:8000/{str_route}order/',
-    json={
-        'order_id': '42',
-        'state': 'new',
-        'contact_id': '2'
-    },
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Создать заказ пользователя
+# response = requests.post(
+#     f'http://127.0.0.1:8000/{str_route}order/',
+#     json={
+#         'order_id': '42',
+#         'state': 'new',
+#         'contact_id': '2'
+#     },
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Просмотреть заказы пользователя
 # response = requests.get(
@@ -262,10 +262,10 @@ print(response.text)
 # print(response.status_code)
 # print(response.text)
 
-# #  Просмотр заказа пользователем
-# response = requests.get(
-#     f'http://127.0.0.1:8000/{str_route}order/43/',
-#     headers={'Authorization': f'Bearer {token_buyer}'}
-# )
-# print(response.status_code)
-# print(response.text)
+#  Просмотр заказа пользователем
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}order/43/',
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)

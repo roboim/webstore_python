@@ -357,8 +357,15 @@ class OrderView(ModelViewSet):
             return error_prompt(False, f'Please check: {error}', 400)
 
     def retrieve(self, request, *args, **kwargs):
-        # ДОБАВИТЬ КОНТАКТ !!!!!
+        """
+        Получить информацию по заказу:
+
+        url: .../order/order_id/
+
+        Response({'Status': True, 'description': data}, status=200)
+        """
         try:
+            # Загрузить продукцию из заказа
             order_cur = Order.objects.get(id=int(kwargs['pk']))
             if order_cur.user_id != request.user.id:
                 return error_prompt(False, f'Please check order_id', 401)
@@ -366,10 +373,16 @@ class OrderView(ModelViewSet):
                                                   'product_info_id__price', 'quantity').filter(
                 order_id=order_cur.id).annotate(total_price=F('quantity') * F('product_info_id__price'))
             data = list(user_items)
+            # Добавить расчёт стоимости
             total_order = 0  # Так как 'price' - PositiveIntegerField
             for line in data:
                 total_order += int(line['total_price'])
             data.append({'total_order': total_order})
+            # Добавить информацию по контакту
+            if order_cur.contact_id:
+                queryset = Contact.objects.get(id=order_cur.contact_id)
+                contact_data = ContactSerializer(queryset)
+                data.append(contact_data.data)
             return Response({'Status': True, 'description': data}, status=200)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
