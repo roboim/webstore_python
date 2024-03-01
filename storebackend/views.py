@@ -250,7 +250,7 @@ class ProductInfoView(APIView):
 
     def get(self, request, *args, **kwargs):
         """
-        Вывести информацию по продуктам с фильтрами 'shop_id' или 'category_id'
+        Вывести информацию по продуктам с возможными фильтрами 'shop_id' или 'category_id'
         """
         try:
             shop_id = request.query_params.get('shop_id')
@@ -327,10 +327,13 @@ class OrderView(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        # ДОБАВИТЬ КОНТАКТ !!!!!
+        """
+        Разместить заказ из корзины и указать контакт для связи
+        """
         try:
             order_id = request.data.get('order_id')
             state = request.data.get('state')
+            contact_id = request.data.get('contact_id')
             if state != 'new':
                 return error_prompt(False, f'Please check state (not new)', 400)
             order_cur = Order.objects.get(id=int(order_id))
@@ -338,6 +341,10 @@ class OrderView(ModelViewSet):
                 return error_prompt(False, f'Please contact admin user (order_s state is not "cart")', 400)
             elif order_cur.user_id != request.user.id:
                 return error_prompt(False, f'Please check order_id', 401)
+            contact_cur = Contact.objects.get(id=int(contact_id))
+            if contact_cur.user_id != request.user.id:
+                return error_prompt(False, f'Please check contact_id', 401)
+            order_cur.contact_id = contact_cur.id
             order_cur.state = 'new'
             order_cur.save()
             return Response({'Status': True, 'description': f'Успешно размещён заказ: {order_id}.'}, status=201)
@@ -345,6 +352,7 @@ class OrderView(ModelViewSet):
             return error_prompt(False, f'Please check: {error}', 400)
 
     def retrieve(self, request, *args, **kwargs):
+        # ДОБАВИТЬ КОНТАКТ !!!!!
         try:
             order_cur = Order.objects.get(id=int(kwargs['pk']))
             if order_cur.user_id != request.user.id:
