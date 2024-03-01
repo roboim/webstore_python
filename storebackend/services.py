@@ -150,6 +150,12 @@ def confirm_user_email(request, *args, **kwargs) -> Response:
         return error_prompt(False, f'Please check: {error}', 400)
 
 
+def create_shop_order(request, *args, **kwargs) -> Response:
+    """
+    Создать заказ в случае наличия товара по всем позициям
+    """
+    pass
+
 def error_prompt(status_data: bool, error_data: str, code_data: int) -> Response:
     """
     Вернуть сообщение об ошибке

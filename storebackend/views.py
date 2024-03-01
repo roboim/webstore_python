@@ -11,7 +11,8 @@ from rest_framework.viewsets import ModelViewSet
 from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo, STATE_CHOICES
 from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer, \
     ProductDataSerializer
-from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
+from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt, \
+    create_shop_order
 from storebackend.signals import new_order
 
 
@@ -290,7 +291,7 @@ class SupplierCreateView(CreateAPIView):
         OpenApiParameter(name='data', description='Additional information', required=True, type=dict),
         OpenApiParameter(name='files', description='upload_file', required=True, type=str)
     ], description='"upload_file" is name of file.'
-                   'values = {"DB": "postgres", "OUT": "yaml", "user_id": "43"}. '
+                   'values = {"DB": "postgres", "OUT": "yaml", "user_id": "user_id"}. '
                    'files=files, data=values', methods=['POST'])
     @action(detail=True, methods=['post'])
     def post(self, request, *args, **kwargs):
@@ -442,6 +443,14 @@ class OrderView(ModelViewSet):
                 states_order = [STATE_CHOICES[el][0] for el in range(len(STATE_CHOICES))]
 
                 order_cur = Order.objects.get(id=int(kwargs['pk']))
+                #  Размещение заказа магазином с бронированием товаров
+                if order_cur.state == 'new' and state == 'confirmed':
+                    create_shop_order(request)
+                    return Response({'Status': True,
+                                     'description': f'Успешно размещён заказ {order_cur.id}.'
+                                                    f'Товар забронирован.'},
+                                    status=201)
+                # Иные случаи
                 order_data = OrderItem.objects.values('order_id', 'product_info_id',
                                                       'product_info_id__shop_id__user_id').filter(
                     product_info_id__shop_id__user_id=request.user.id).first()
