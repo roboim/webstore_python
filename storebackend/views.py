@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo
+from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo, STATE_CHOICES
 from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer, \
     ProductDataSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
@@ -388,31 +388,68 @@ class OrderView(ModelViewSet):
             return error_prompt(False, f'Please check: {error}', 400)
 
     def update(self, request, *args, **kwargs):
-        try:
-            state = request.data.get('state')
-            if state != 'canceled':
-                return error_prompt(False, f'Please check state (not canceled)', 400)
-            order_cur = Order.objects.get(id=int(kwargs['pk']))
-            if order_cur.state == 'canceled':
-                return error_prompt(False, f'The order {order_cur.id} already canceled',
-                                    304)
-            elif order_cur.state != 'cart' and order_cur.state != 'new':
-                return error_prompt(False, f''
-                                           f'Please contact admin user (order_s state is not "cart" or "new")',
-                                    400)
+        """
+        Для покупателя:
+        возможность отмены заказа  **kwargs={'state': 'canceled'},
 
-            elif order_cur.user_id != request.user.id:
-                return error_prompt(False, f'Please check order_id', 401)
-            order_cur.state = state
-            order_cur.save()
-            return Response({'Status': True, 'description': f'Успешно отменён заказ: {order_cur.id}.'}, status=200)
+        Для магазина:
+        возможность изменения статуса заказа  **kwargs={'state': ''},
+        - cart - в корзине;
+        - new - новый;
+        - confirmed - подтверждённый;
+        - assembled - подготовленный к отправке;
+        - sent - отправленный;
+        - delivered - доставленный;
+        - canceled - отменённый.
+        """
+        try:
+            # Формируем список возможных статусов из данных в models.py
+            states_order = [STATE_CHOICES[el][0] for el in range(len(STATE_CHOICES))]
+
+            state = str(request.data.get('state'))
+            if request.user.type == 'buyer':
+                if state != 'canceled':
+                    return error_prompt(False, f'Please check state (not canceled)', 400)
+                order_cur = Order.objects.get(id=int(kwargs['pk']))
+                if order_cur.state == 'canceled':
+                    return error_prompt(False, f'The order {order_cur.id} already canceled',
+                                        304)
+                elif order_cur.state != 'cart' and order_cur.state != 'new':
+                    return error_prompt(False, f''
+                                               f'Please contact admin user (order_s state is not "cart" or "new")',
+                                        400)
+
+                elif order_cur.user_id != request.user.id:
+                    return error_prompt(False, f'Please check order_id', 401)
+                order_cur.state = state
+                order_cur.save()
+                return Response({'Status': True, 'description': f'Успешно отменён заказ: {order_cur.id}.'}, status=200)
+            elif request.user.type == 'shop':
+                order_cur = Order.objects.get(id=int(kwargs['pk']))
+                order_data = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__shop_id__user_id').filter(product_info_id__shop_id__user_id=request.user.id).first()
+
+                if order_data['product_info_id__shop_id__user_id'] != request.user.id:
+                    return error_prompt(False, f'Please check order_id', 401)
+                elif order_cur.state == 'canceled':
+                    return error_prompt(False, f'The order {order_cur.id} already canceled',
+                                        304)
+                if state in states_order:
+                    return Response(state)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Метод запрещён.
+        return error_prompt(False, f'Delete method is not allowed', 405)
+        """
         return error_prompt(False, f'Delete method is not allowed', 405)
 
     def list(self, request, *args, **kwargs):
+        """
+        Вывести список заказов покупателя без товаров в корзине, для магазинов все обозначенные товары.
+        return Response(data)
+        """
         if request.user.type == 'buyer':
             user_orders = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__price',
                                                    'quantity').filter(order_id__user_id=request.user.id).exclude(

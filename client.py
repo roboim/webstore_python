@@ -236,21 +236,21 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Просмотреть заказы пользователя
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}order/',
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
-
-#  Просмотреть заказы магазина
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}order/',
-    headers={'Authorization': f'Bearer {token_admin}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Просмотреть заказы пользователя
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}order/',
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
+#
+# #  Просмотреть заказы магазина
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}order/',
+#     headers={'Authorization': f'Bearer {token_admin}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Защита от удаления заказа пользователя
 # response = requests.delete(
@@ -269,6 +269,15 @@ print(response.text)
 # )
 # print(response.status_code)
 # print(response.text)
+
+#  Изменение заказа магазином
+response = requests.patch(
+    f'http://127.0.0.1:8000/{str_route}order/42/',
+    json={'state': 'delivered'},
+    headers={'Authorization': f'Bearer {token_admin}'}
+)
+print(response.status_code)
+print(response.text)
 
 # #  Просмотр заказа пользователем
 # response = requests.get(
