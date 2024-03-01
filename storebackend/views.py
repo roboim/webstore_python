@@ -329,6 +329,11 @@ class OrderView(ModelViewSet):
     def create(self, request, *args, **kwargs):
         """
         Разместить заказ из корзины и указать контакт для связи
+        **kwargs={
+        'order_id': '',
+        'state': '',
+        'contact_id': ''
+        }
         """
         try:
             order_id = request.data.get('order_id')
