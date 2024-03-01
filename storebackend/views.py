@@ -12,6 +12,7 @@ from storebackend.models import Category, Product, Contact, Shop, Order, OrderIt
 from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer, \
     ProductDataSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt
+from storebackend.signals import new_order
 
 
 # @api_view(['GET'])
@@ -360,7 +361,13 @@ class OrderView(ModelViewSet):
             order_cur.contact_id = contact_cur.id
             order_cur.state = 'new'
             order_cur.save()
-            return Response({'Status': True, 'description': f'Успешно размещён заказ: {order_id}.'}, status=201)
+            # Сигнал о создании нового заказа
+            new_order.send(sender=self.__class__, user_email=request.user.email,
+                           user_first_name=request.user.first_name)
+            return Response({'Status': True,
+                             'description': f'Успешно размещён заказ: {order_id}. '
+                                            f'Ожидайте письмо на адрес {request.user.email}'},
+                            status=201)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 

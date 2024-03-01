@@ -206,43 +206,43 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Изменение позиций заказа пользователя
-response = requests.put(
-    f'http://127.0.0.1:8000/{str_route}cart/',
-    json={'orders': [
-            [
-                {'order_id': '71'},
-                {'shop_id': '1', 'products': [{'product_id': '4', 'quantity': '77'}, {'product_id': '5', 'quantity': '78'}]}
-
-            ],
-            [
-                {'order_id': '72'},
-                {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '3'}]}
-            ],
-            [
-                {'order_id': '74'},
-                {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '4'}]}
-            ]
-        ]
-    },
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
-
-
-# #  Создать заказ пользователя
-# response = requests.post(
-#     f'http://127.0.0.1:8000/{str_route}order/',
-#     json={
-#         'order_id': '42',
-#         'state': 'new',
-#         'contact_id': '2'
+# #  Изменение позиций заказа пользователя
+# response = requests.put(
+#     f'http://127.0.0.1:8000/{str_route}cart/',
+#     json={'orders': [
+#             [
+#                 {'order_id': '71'},
+#                 {'shop_id': '1', 'products': [{'product_id': '4', 'quantity': '77'}, {'product_id': '5', 'quantity': '78'}]}
+#
+#             ],
+#             [
+#                 {'order_id': '72'},
+#                 {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '3'}]}
+#             ],
+#             [
+#                 {'order_id': '74'},
+#                 {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '4'}]}
+#             ]
+#         ]
 #     },
 #     headers={'Authorization': f'Bearer {token_buyer}'}
 # )
 # print(response.status_code)
 # print(response.text)
+
+
+#  Создать заказ пользователя
+response = requests.post(
+    f'http://127.0.0.1:8000/{str_route}order/',
+    json={
+        'order_id': '42',
+        'state': 'new',
+        'contact_id': '2'
+    },
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)
 
 # #  Просмотреть заказы пользователя
 # response = requests.get(

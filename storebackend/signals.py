@@ -8,6 +8,7 @@ from django.dispatch import receiver, Signal
 from storebackend.models import User, ConfirmEmailToken
 
 new_user_registered = Signal()
+new_order = Signal()
 
 
 @receiver(post_save, sender=User)
@@ -25,3 +26,15 @@ def new_user_created_signal(sender: Type[User], instance: User, created: bool, *
         send_mail('Вы зарегистрировались в webstore_python', message_body,
                   settings.EMAIL_HOST_USER, [instance.email])
         # print(message_body)
+
+
+@receiver(new_order)
+def new_order_created_signal(user_email, user_first_name, **kwargs):
+    """
+    Отправка письма для создания заказа
+    """
+    message_body = (
+        f"Добрый день, {user_first_name}! От Вашего лица поступил запрос на новый заказ."
+        f"Ожидайте, пожалуйста, подтверждения от консультанта магазина.")
+    send_mail('Подтверждение получения нового заказа', message_body,
+              settings.EMAIL_HOST_USER, [user_email])
