@@ -249,6 +249,9 @@ class ProductInfoView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
+        """
+        Вывести информацию по продуктам с фильтрами 'shop_id' или 'category_id'
+        """
         try:
             shop_id = request.query_params.get('shop_id')
             category_id = request.query_params.get('category_id')
@@ -259,9 +262,9 @@ class ProductInfoView(APIView):
             if category_id:
                 query = query & Q(product__category_id=category_id)
 
-            queryset = ProductInfo.objects.filter(query).select_related('shop', 'product__category').distinct()
+            queryset = ProductInfo.objects.filter(query).select_related('shop', 'product__category').prefetch_related(
+                'product_parameters__parameter').distinct()
             serializer = ProductDataSerializer(queryset, many=True)
-
             return Response(serializer.data)
 
         except Exception as error:
@@ -346,7 +349,9 @@ class OrderView(ModelViewSet):
             order_cur = Order.objects.get(id=int(kwargs['pk']))
             if order_cur.user_id != request.user.id:
                 return error_prompt(False, f'Please check order_id', 401)
-            user_items = OrderItem.objects.values('product_info_id__external_id', 'product_info_id__model', 'product_info_id__price', 'quantity').filter(order_id=order_cur.id).annotate(total_price=F('quantity') * F('product_info_id__price'))
+            user_items = OrderItem.objects.values('product_info_id__external_id', 'product_info_id__model',
+                                                  'product_info_id__price', 'quantity').filter(
+                order_id=order_cur.id).annotate(total_price=F('quantity') * F('product_info_id__price'))
             data = list(user_items)
             total_order = 0  # Так как 'price' - PositiveIntegerField
             for line in data:
