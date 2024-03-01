@@ -430,10 +430,10 @@ class OrderView(ModelViewSet):
                 product_info_id__shop_id__user_id=request.user.id).order_by('order_id').annotate(
                 total_price=F('quantity') * F('product_info_id__price'))
             data = list(shop_orders)
-            total_cart = 0  # Так как 'price' - PositiveIntegerField
+            total_orders = 0  # Так как 'price' - PositiveIntegerField
             for line in data:
-                total_cart += int(line['total_price'])
-            data.append({'total_cart': total_cart})
+                total_orders += int(line['total_price'])
+            data.append({'total_orders': total_orders})
             data.append(
                 {'user_id': request.user.id, 'shop': request.user.shop.name, 'user_company': request.user.company})
             return Response(data)
