@@ -171,11 +171,15 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 #     f'http://127.0.0.1:8000/{str_route}cart/',
 #     json={'orders': [
 #         [
-#             {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '2'}, {'product_id': '5', 'quantity': '1'}]},
+#             {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '2'}, {'product_id': '5', 'quantity': '1'}]}
+#         ],
+#         [
 #             {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}
 #         ],
 #         [
-#             {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '1'}]},
+#             {'shop_id': '1', 'products': [{'product_id': '3', 'quantity': '1'}]}
+#         ],
+#         [
 #             {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '1'}]}]
 #         ]
 #     },
@@ -189,11 +193,11 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 #     f'http://127.0.0.1:8000/{str_route}cart/',
 #     json={'orders': [
 #         [
-#             {'order_id': '20'},
-#             {'shop_id': '1', 'products': [{'product_id': '3'}, {'product_id': '5'}]},
+#             {'order_id': '55'},
+#             {'shop_id': '1', 'products': [{'product_id': '3'}, {'product_id': '5'}]}
 #         ],
 #         [
-#             {'order_id': '21'},
+#             {'order_id': '56'},
 #             {'shop_id': '2', 'products': [{'product_id': '6'}]}]
 #         ]
 #     },
@@ -202,25 +206,29 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-# #  Изменение позиций заказа пользователя
-# response = requests.put(
-#     f'http://127.0.0.1:8000/{str_route}cart/',
-#     json={'orders': [
-#             [
-#                 {'order_id': '42'},
-#                 {'shop_id': '1', 'products': [{'product_id': '4', 'quantity': '77'}, {'product_id': '5', 'quantity': '78'}]},
-#                 {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '3'}]}
-#             ],
-#             [
-#                 {'order_id': '43'},
-#                 {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '4'}]}
-#             ]
-#         ]
-#     },
-#     headers={'Authorization': f'Bearer {token_buyer}'}
-# )
-# print(response.status_code)
-# print(response.text)
+#  Изменение позиций заказа пользователя
+response = requests.put(
+    f'http://127.0.0.1:8000/{str_route}cart/',
+    json={'orders': [
+            [
+                {'order_id': '71'},
+                {'shop_id': '1', 'products': [{'product_id': '4', 'quantity': '77'}, {'product_id': '5', 'quantity': '78'}]}
+
+            ],
+            [
+                {'order_id': '72'},
+                {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '3'}]}
+            ],
+            [
+                {'order_id': '74'},
+                {'shop_id': '2', 'products': [{'product_id': '6', 'quantity': '4'}]}
+            ]
+        ]
+    },
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)
 
 
 # #  Создать заказ пользователя
@@ -270,14 +278,14 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Изменение заказа магазином
-response = requests.patch(
-    f'http://127.0.0.1:8000/{str_route}order/42/',
-    json={'state': 'sent'},
-    headers={'Authorization': f'Bearer {token_admin}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Изменение заказа магазином
+# response = requests.patch(
+#     f'http://127.0.0.1:8000/{str_route}order/42/',
+#     json={'state': 'sent'},
+#     headers={'Authorization': f'Bearer {token_admin}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Просмотр заказа пользователем
 # response = requests.get(
