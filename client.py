@@ -36,6 +36,7 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
+# # Создать продукты
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}products/create/',
 #     json={'name': 'Продукт 1034', 'category': 1},
@@ -43,6 +44,15 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # )
 # print(response.status_code)
 # print(response.text)
+
+#  Просмотр продукции
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}products/info/',
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)
+
 
 # # Обновить данные поставщика
 # with open(filename, 'rb') as f:
@@ -148,13 +158,13 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Проверка корзины пользователя
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}cart/',
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Проверка корзины пользователя
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}cart/',
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Создание корзины пользователя
 # response = requests.post(
@@ -251,10 +261,10 @@ print(response.text)
 # print(response.status_code)
 # print(response.text)
 
-#  Просмотр заказа пользователем
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}order/43/',
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Просмотр заказа пользователем
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}order/43/',
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
