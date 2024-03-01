@@ -447,11 +447,15 @@ class OrderView(ModelViewSet):
                 order_cur = Order.objects.get(id=int(kwargs['pk']))
                 #  Размещение заказа магазином с бронированием товаров
                 if order_cur.state == 'new' and state == 'confirmed':
-                    create_shop_order(request, state)
-                    return Response({'Status': True,
-                                     'description': f'Успешно размещён заказ {order_cur.id}.'
-                                                    f'Товар забронирован.'},
-                                    status=201)
+                    modify = create_shop_order(request, order_cur, state)
+                    if modify:
+                        return Response({'Status': True,
+                                         'description': f'Успешно размещён заказ {order_cur.id}.'
+                                                        f'Товары забронированы.'},
+                                        status=201)
+                    else:
+                        return error_prompt(False, f'Common problem {modify}',
+                                            304)
                 # Иные случаи
                 order_data = OrderItem.objects.values('order_id', 'product_info_id',
                                                       'product_info_id__shop_id__user_id').filter(

@@ -15,6 +15,7 @@ token_buyer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNz
 token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTcyODc5NiwiaWF0IjoxNzA5MTM2Nzk2LCJqdGkiOiJhNjhmOTNhMzgyNWE0Mjg1OGM1NGI3ZjE1MGExNWMyYyIsInVzZXJfaWQiOiJidXllckB5YW5kZXgucnUifQ.vhYRVJ2Mn6DJHb2-Ca_dK-u4c-tPzqpvBsG7pTWTjvA"
 
 
+# # Запросить категории
 # response = requests.get(
 #     f'http://127.0.0.1:8000/{str_route}categories/',
 #     headers={'Authorization': f'Bearer {token_admin}'}
@@ -22,6 +23,7 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
+# # Создать категорию
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}categories/create/',
 #     json={'name': 'Категория 12', 'shops': []}
@@ -277,14 +279,14 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.text)
 
 
-#  Размещение заказа магазином с бронированием товаров
-response = requests.patch(
-    f'http://127.0.0.1:8000/{str_route}order/42/',
-    json={'state': 'confirmed'},
-    headers={'Authorization': f'Bearer {token_admin}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Размещение заказа магазином с бронированием товаров
+# response = requests.patch(
+#     f'http://127.0.0.1:8000/{str_route}order/42/',
+#     json={'state': 'confirmed'},
+#     headers={'Authorization': f'Bearer {token_admin}'}
+# )
+# print(response.status_code)
+# print(response.text)
 
 # #  Изменение заказа магазином
 # response = requests.patch(

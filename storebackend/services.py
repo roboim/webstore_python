@@ -1,9 +1,10 @@
 import yaml
 from django.contrib.auth.password_validation import validate_password
+from django.db.models import F
 from rest_framework.response import Response
 
 from storebackend.models import Shop, ProductInfo, Category, Product, Parameter, ProductParameter, User, \
-    ConfirmEmailToken
+    ConfirmEmailToken, OrderItem, Order
 from storebackend.serializers import UserSerializer
 
 
@@ -150,12 +151,41 @@ def confirm_user_email(request, *args, **kwargs) -> Response:
         return error_prompt(False, f'Please check: {error}', 400)
 
 
-def create_shop_order(request, state) -> Response:
+def create_shop_order(request, order_cur, state):
     """
     Создать заказ в случае наличия товара по всем позициям
     """
-    pass
-
+    queryset = (
+        OrderItem.objects.values('order_id', 'product_info_id__shop_id', 'product_info_id', 'product_info_id__price', 'product_info_id__quantity',
+                                 'quantity').filter(
+            order_id=order_cur.id).order_by('product_info_id__shop_id').annotate(
+            total_price=F('quantity') * F('product_info_id__price')))
+    all_shop_orders = list(queryset)
+    # Проверка доступности всех позиций в заказе
+    flag_ready = True
+    item_not_available = list()
+    for order_item in all_shop_orders:
+        if order_item['product_info_id__quantity'] < order_item['quantity']:
+            flag_ready = False
+            item_not_available.append({order_item['product_info_id']: order_item['product_info_id__quantity']})
+    if flag_ready is False:
+        # Требуется изменить заказ перед бронированием
+        return error_prompt(False, f'{item_not_available}', 400)
+    # Забронировать позиции на складе
+    item_booked = list()
+    for order_item in all_shop_orders:
+        result = ProductInfo.objects.filter(id=order_item['product_info_id']).update(quantity=order_item['product_info_id__quantity']-order_item['quantity'])
+        if result != 1:
+            return Response({'Status': False,
+                         'description': item_booked}, status=304)
+        item_booked.append({order_item['product_info_id']: order_item['quantity']})
+    # Успешное обновление заказа
+    result = Order.objects.filter(id=order_cur.id).update(state=state)
+    if result != 1:
+        return Response({'Status': False,
+                         'description': item_booked}, status=304)
+    # print(item_booked)
+    return True
 
 def error_prompt(status_data: bool, error_data: str, code_data: int) -> Response:
     """
