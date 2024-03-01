@@ -273,7 +273,7 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 #  Изменение заказа магазином
 response = requests.patch(
     f'http://127.0.0.1:8000/{str_route}order/42/',
-    json={'state': 'delivered'},
+    json={'state': 'sent'},
     headers={'Authorization': f'Bearer {token_admin}'}
 )
 print(response.status_code)

@@ -427,14 +427,17 @@ class OrderView(ModelViewSet):
             elif request.user.type == 'shop':
                 order_cur = Order.objects.get(id=int(kwargs['pk']))
                 order_data = OrderItem.objects.values('order_id', 'product_info_id', 'product_info_id__shop_id__user_id').filter(product_info_id__shop_id__user_id=request.user.id).first()
-
                 if order_data['product_info_id__shop_id__user_id'] != request.user.id:
                     return error_prompt(False, f'Please check order_id', 401)
                 elif order_cur.state == 'canceled':
                     return error_prompt(False, f'The order {order_cur.id} already canceled',
                                         304)
                 if state in states_order:
-                    return Response(state)
+                    order_cur.state = state
+                    order_cur.save()
+                    return Response({'Status': True, 'description': f'Успешно изменён статус заказа {order_cur.id} в значение {order_cur.state}.'}, status=201)
+                else:
+                    return error_prompt(False, f'Please check state', 401)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 
