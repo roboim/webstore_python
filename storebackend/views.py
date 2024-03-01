@@ -445,7 +445,7 @@ class OrderView(ModelViewSet):
                 order_cur = Order.objects.get(id=int(kwargs['pk']))
                 #  Размещение заказа магазином с бронированием товаров
                 if order_cur.state == 'new' and state == 'confirmed':
-                    create_shop_order(request)
+                    create_shop_order(request, state)
                     return Response({'Status': True,
                                      'description': f'Успешно размещён заказ {order_cur.id}.'
                                                     f'Товар забронирован.'},
