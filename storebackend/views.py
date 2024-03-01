@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo, STATE_CHOICES
+from storebackend.models import Category, Product, Contact, Shop, Order, OrderItem, ProductInfo, STATE_CHOICES, \
+    WEBSTORE_EMPLOYEE_SHOP_ID
 from storebackend.serializers import CategorySerializer, ProductSerializer, ContactSerializer, OrderSerializer, \
     ProductDataSerializer
 from storebackend.services import read_yaml_write_to_db, create_user_data, confirm_user_email, error_prompt, \
@@ -439,9 +440,10 @@ class OrderView(ModelViewSet):
                 return Response({'Status': True, 'description': f'Успешно отменён заказ: {order_cur.id}.'},
                                 status=200)
             elif request.user.type == 'shop':
+                if request.user.shop.id != WEBSTORE_EMPLOYEE_SHOP_ID:
+                    return error_prompt(False, f'User is not a webstore staff', 401)
                 # Формируем список возможных статусов из данных в models.py
                 states_order = [STATE_CHOICES[el][0] for el in range(len(STATE_CHOICES))]
-
                 order_cur = Order.objects.get(id=int(kwargs['pk']))
                 #  Размещение заказа магазином с бронированием товаров
                 if order_cur.state == 'new' and state == 'confirmed':
@@ -468,6 +470,8 @@ class OrderView(ModelViewSet):
                                     status=201)
                 else:
                     return error_prompt(False, f'Please check state', 401)
+            else:
+                return error_prompt(False, f'Please check user_type', 401)
         except Exception as error:
             return error_prompt(False, f'Please check: {error}', 400)
 

@@ -21,6 +21,8 @@ USER_TYPE_CHOICES = (
 
 )
 
+WEBSTORE_EMPLOYEE_SHOP_ID = 2
+
 
 class UserManager(BaseUserManager):
     """
