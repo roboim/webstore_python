@@ -418,9 +418,6 @@ class OrderView(ModelViewSet):
         - canceled - отменённый.
         """
         try:
-            # Формируем список возможных статусов из данных в models.py
-            states_order = [STATE_CHOICES[el][0] for el in range(len(STATE_CHOICES))]
-
             state = str(request.data.get('state'))
             if request.user.type == 'buyer':
                 if state != 'canceled':
@@ -441,6 +438,9 @@ class OrderView(ModelViewSet):
                 return Response({'Status': True, 'description': f'Успешно отменён заказ: {order_cur.id}.'},
                                 status=200)
             elif request.user.type == 'shop':
+                # Формируем список возможных статусов из данных в models.py
+                states_order = [STATE_CHOICES[el][0] for el in range(len(STATE_CHOICES))]
+
                 order_cur = Order.objects.get(id=int(kwargs['pk']))
                 order_data = OrderItem.objects.values('order_id', 'product_info_id',
                                                       'product_info_id__shop_id__user_id').filter(
