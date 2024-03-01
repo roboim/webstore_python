@@ -9,8 +9,8 @@ shop_id = 1                # Номер тестового магазина
 
 token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MDQ0ODg0LCJpYXQiOjE3MDg5NTg0ODQsImp0aSI6ImE2MTYyNjM5Y2VlNDRhZmU4ZWNjNTRmNjA1NmRiNmUzIiwidXNlcl9pZCI6InNob3BAeWFuZGV4LnJ1In0.EdwuPWBtz0DSirJMF1A68eKRPOJYNQmVL45iypcGgGs"
 token_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTU1MDQ4NCwiaWF0IjoxNzA4OTU4NDg0LCJqdGkiOiJjZDQyYjkyMjUxYjA0YTQ0YmI1Njg0NmYzMWUyMWE0NyIsInVzZXJfaWQiOiJzaG9wQHlhbmRleC5ydSJ9.5mGvRmJfB7nRyyHd7pjHSjRdb2tiMJVwZb3Qiyjmcvc"
-token_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5MTI3NDAwLCJpYXQiOjE3MDg5NTM5MjQsImp0aSI6ImRkMWEwZTkyZWRhNjQxYjBiMTBjMzJmNDUxMTJmNzg2IiwidXNlcl9pZCI6ImFkbWluQHlhbmRleC5ydSJ9.tTZAz3ip5Gsmc5zWpus2gWf8waEKUNe6lXFBWU_NuYc"
-token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTYzMzAwMCwiaWF0IjoxNzA5MDQxMDAwLCJqdGkiOiJhNGQwNmQ0ZjI0MzE0N2Y1YWUwMzNkYjE1NGM2ZDdiYyIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.luVlcbE9Lyv4zabBXnI8SIJZk91u0Qqv8hSPm0zVKJs"
+token_admin = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA5Mzc0Mzg4LCJpYXQiOjE3MDkwNDEwMDAsImp0aSI6ImYzMTI5ZTRlODQxNTQ1ZGRhMmY3YjVkNTgxYjEwMWRmIiwidXNlcl9pZCI6ImFkbWluQHlhbmRleC5ydSJ9.E0vJGeJKcs0wUfPg-ZiMlPfjOL3t9Y69Y3aJYFMxuGk"
+token_admin_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTg3OTk4OCwiaWF0IjoxNzA5Mjg3OTg4LCJqdGkiOiIwNmUwYjRlOTc3NWI0N2U5OTBkNTQwMDdlMWNiZDRjNCIsInVzZXJfaWQiOiJhZG1pbkB5YW5kZXgucnUifQ.x0ifrMX2mnTejmvMVC59RWfWHoY8_6s9Uwi-awyb0v8"
 token_buyer = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzEwMDAwNzk2LCJpYXQiOjE3MDkwNTAwMTksImp0aSI6IjI5MmJkOTIyNmJiZTRkZjQ5YWY3ZjliYTRiNjYyZmRlIiwidXNlcl9pZCI6ImJ1eWVyQHlhbmRleC5ydSJ9.eKGHveudA2jK9vpH7H3lZX_quy8vTQqF-9E-LP7Cc7o"
 token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcxMTcyODc5NiwiaWF0IjoxNzA5MTM2Nzk2LCJqdGkiOiJhNjhmOTNhMzgyNWE0Mjg1OGM1NGI3ZjE1MGExNWMyYyIsInVzZXJfaWQiOiJidXllckB5YW5kZXgucnUifQ.vhYRVJ2Mn6DJHb2-Ca_dK-u4c-tPzqpvBsG7pTWTjvA"
 
@@ -78,7 +78,7 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # #  Обновить токен
 # response = requests.post(
 #     f'http://127.0.0.1:8000/{str_route}token/refresh/',
-#     json={'email': 'buyer@yandex.ru', 'password': 'admin1admin', 'refresh': token_buyer_refresh}
+#     json={'email': 'admin@yandex.ru', 'password': 'admin1admin', 'refresh': token_admin_refresh}
 # )
 # print(response.status_code)
 # print(response.text)
@@ -236,13 +236,21 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-# #  Просмотреть заказы пользователя
-# response = requests.get(
-#     f'http://127.0.0.1:8000/{str_route}order/',
-#     headers={'Authorization': f'Bearer {token_buyer}'}
-# )
-# print(response.status_code)
-# print(response.text)
+#  Просмотреть заказы пользователя
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}order/',
+    headers={'Authorization': f'Bearer {token_buyer}'}
+)
+print(response.status_code)
+print(response.text)
+
+#  Просмотреть заказы магазина
+response = requests.get(
+    f'http://127.0.0.1:8000/{str_route}order/',
+    headers={'Authorization': f'Bearer {token_admin}'}
+)
+print(response.status_code)
+print(response.text)
 
 # #  Защита от удаления заказа пользователя
 # response = requests.delete(
@@ -262,10 +270,10 @@ token_buyer_refresh = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoi
 # print(response.status_code)
 # print(response.text)
 
-#  Просмотр заказа пользователем
-response = requests.get(
-    f'http://127.0.0.1:8000/{str_route}order/43/',
-    headers={'Authorization': f'Bearer {token_buyer}'}
-)
-print(response.status_code)
-print(response.text)
+# #  Просмотр заказа пользователем
+# response = requests.get(
+#     f'http://127.0.0.1:8000/{str_route}order/43/',
+#     headers={'Authorization': f'Bearer {token_buyer}'}
+# )
+# print(response.status_code)
+# print(response.text)
