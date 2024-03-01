@@ -134,8 +134,8 @@ class CartView(APIView):
         orders = request.data.get('orders')
         try:
             for order in orders:
-                if len(order) > 1:
-                    return error_prompt(False, f'Please use one shop in an order', 400)
+                # if len(order) > 1:
+                #     return error_prompt(False, f'Please use one shop in an order', 400)
                 order_cur = Order.objects.create(user_id=user_id, state='cart')
                 for shop in order:
                     for product in shop['products']:
@@ -156,8 +156,8 @@ class CartView(APIView):
         edited_order_items = list()
         try:
             for order in orders:
-                if len(order) > 2:
-                    return error_prompt(False, f'Please use one shop in an order', 400)
+                # if len(order) > 2:
+                #     return error_prompt(False, f'Please use one shop in an order', 400)
                 order_num = order[0]['order_id']
                 order_cur = Order.objects.get(user_id=user_id, state='cart', id=order_num)
                 order_shops = [order[i] for i in range(1, len(order))]
@@ -196,8 +196,8 @@ class CartView(APIView):
         deleted_order_items = list()
         try:
             for order in orders:
-                if len(order) > 2:
-                    return error_prompt(False, f'Please use one shop in an order', 400)
+                # if len(order) > 2:
+                #     return error_prompt(False, f'Please use one shop in an order', 400)
                 order_num = order[0]['order_id']
                 order_cur = Order.objects.get(user_id=user_id, state='cart', id=order_num)
                 order_shops = [order[i] for i in range(1, len(order))]
